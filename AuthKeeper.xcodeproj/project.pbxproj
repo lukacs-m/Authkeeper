@@ -3,8 +3,19 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 70;
 	objects = {
+
+/* Begin PBXBuildFile section */
+		B86B5AB42C56DEA3003BBEE4 /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = B86B5AB32C56DEA3003BBEE4 /* Models */; };
+		B86B5AB62C56F41B003BBEE4 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B86B5AB52C56F41B003BBEE4 /* Models */; };
+		B86B5AB92C56F4BD003BBEE4 /* DataLayer in Resources */ = {isa = PBXBuildFile; fileRef = B86B5AB72C56F4BD003BBEE4 /* DataLayer */; };
+		B86B5ABA2C56F4BD003BBEE4 /* DomainLayer in Resources */ = {isa = PBXBuildFile; fileRef = B86B5AB82C56F4BD003BBEE4 /* DomainLayer */; };
+		B86B5ABD2C56F54F003BBEE4 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = B86B5ABC2C56F54F003BBEE4 /* Factory */; };
+		B86B5AC02C56F569003BBEE4 /* SimpleHaptic in Frameworks */ = {isa = PBXBuildFile; productRef = B86B5ABF2C56F569003BBEE4 /* SimpleHaptic */; };
+		B86B5AC32C56F580003BBEE4 /* SimpleToast in Frameworks */ = {isa = PBXBuildFile; productRef = B86B5AC22C56F580003BBEE4 /* SimpleToast */; };
+		B86B5AD82C56F670003BBEE4 /* SimplyPersist in Frameworks */ = {isa = PBXBuildFile; productRef = B86B5AD72C56F670003BBEE4 /* SimplyPersist */; };
+/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		B86B5A942C56DD8E003BBEE4 /* PBXContainerItemProxy */ = {
@@ -27,6 +38,9 @@
 		B86B5A802C56DD8D003BBEE4 /* AuthKeeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthKeeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B86B5A932C56DD8E003BBEE4 /* AuthKeeperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AuthKeeperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B86B5A9D2C56DD8F003BBEE4 /* AuthKeeperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AuthKeeperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B86B5AB52C56F41B003BBEE4 /* Models */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Models; path = LocalPackages/Models; sourceTree = "<group>"; };
+		B86B5AB72C56F4BD003BBEE4 /* DataLayer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DataLayer; path = LocalPackages/DataLayer; sourceTree = "<group>"; };
+		B86B5AB82C56F4BD003BBEE4 /* DomainLayer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DomainLayer; path = LocalPackages/DomainLayer; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -40,6 +54,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B86B5AC32C56F580003BBEE4 /* SimpleToast in Frameworks */,
+				B86B5AB42C56DEA3003BBEE4 /* Models in Frameworks */,
+				B86B5AC02C56F569003BBEE4 /* SimpleHaptic in Frameworks */,
+				B86B5ABD2C56F54F003BBEE4 /* Factory in Frameworks */,
+				B86B5AD82C56F670003BBEE4 /* SimplyPersist in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +85,9 @@
 				B86B5A822C56DD8D003BBEE4 /* AuthKeeper */,
 				B86B5A962C56DD8E003BBEE4 /* AuthKeeperTests */,
 				B86B5AA02C56DD8F003BBEE4 /* AuthKeeperUITests */,
+				B86B5AB72C56F4BD003BBEE4 /* DataLayer */,
+				B86B5AB82C56F4BD003BBEE4 /* DomainLayer */,
+				B86B5AB52C56F41B003BBEE4 /* Models */,
 				B86B5A812C56DD8D003BBEE4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -100,6 +122,11 @@
 			);
 			name = AuthKeeper;
 			packageProductDependencies = (
+				B86B5AB32C56DEA3003BBEE4 /* Models */,
+				B86B5ABC2C56F54F003BBEE4 /* Factory */,
+				B86B5ABF2C56F569003BBEE4 /* SimpleHaptic */,
+				B86B5AC22C56F580003BBEE4 /* SimpleToast */,
+				B86B5AD72C56F670003BBEE4 /* SimplyPersist */,
 			);
 			productName = AuthKeeper;
 			productReference = B86B5A802C56DD8D003BBEE4 /* AuthKeeper.app */;
@@ -183,6 +210,12 @@
 				Base,
 			);
 			mainGroup = B86B5A772C56DD8D003BBEE4;
+			packageReferences = (
+				B86B5ABB2C56F54F003BBEE4 /* XCRemoteSwiftPackageReference "Factory" */,
+				B86B5ABE2C56F569003BBEE4 /* XCRemoteSwiftPackageReference "SimpleHaptic" */,
+				B86B5AC12C56F580003BBEE4 /* XCRemoteSwiftPackageReference "SimpleToast" */,
+				B86B5AD62C56F66F003BBEE4 /* XCLocalSwiftPackageReference "../../SwiftPackages/SimplyPersist" */,
+			);
 			productRefGroup = B86B5A812C56DD8D003BBEE4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -199,6 +232,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B86B5AB92C56F4BD003BBEE4 /* DataLayer in Resources */,
+				B86B5ABA2C56F4BD003BBEE4 /* DomainLayer in Resources */,
+				B86B5AB62C56F41B003BBEE4 /* Models in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,6 +415,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AuthKeeper/Preview Content\"";
+				DEVELOPMENT_TEAM = HG67WS83RZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -416,6 +453,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AuthKeeper/Preview Content\"";
+				DEVELOPMENT_TEAM = HG67WS83RZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -570,6 +608,66 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		B86B5AD62C56F66F003BBEE4 /* XCLocalSwiftPackageReference "../../SwiftPackages/SimplyPersist" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../SwiftPackages/SimplyPersist;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B86B5ABB2C56F54F003BBEE4 /* XCRemoteSwiftPackageReference "Factory" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lukacs-m/Factory";
+			requirement = {
+				branch = "feature/structured-concurrency-conformance";
+				kind = branch;
+			};
+		};
+		B86B5ABE2C56F569003BBEE4 /* XCRemoteSwiftPackageReference "SimpleHaptic" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lukacs-m/SimpleHaptic";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		B86B5AC12C56F580003BBEE4 /* XCRemoteSwiftPackageReference "SimpleToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lukacs-m/SimpleToast";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B86B5AB32C56DEA3003BBEE4 /* Models */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Models;
+		};
+		B86B5ABC2C56F54F003BBEE4 /* Factory */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B86B5ABB2C56F54F003BBEE4 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = Factory;
+		};
+		B86B5ABF2C56F569003BBEE4 /* SimpleHaptic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B86B5ABE2C56F569003BBEE4 /* XCRemoteSwiftPackageReference "SimpleHaptic" */;
+			productName = SimpleHaptic;
+		};
+		B86B5AC22C56F580003BBEE4 /* SimpleToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B86B5AC12C56F580003BBEE4 /* XCRemoteSwiftPackageReference "SimpleToast" */;
+			productName = SimpleToast;
+		};
+		B86B5AD72C56F670003BBEE4 /* SimplyPersist */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SimplyPersist;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B86B5A782C56DD8D003BBEE4 /* Project object */;
 }

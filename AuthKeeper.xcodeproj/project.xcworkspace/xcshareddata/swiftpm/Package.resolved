@@ -1,0 +1,33 @@
+{
+  "originHash" : "8da640e74fa0a52154c5e74b5d1c837a43b4d7c70e85a137eb38e6621adfc360",
+  "pins" : [
+    {
+      "identity" : "factory",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lukacs-m/Factory",
+      "state" : {
+        "branch" : "feature/structured-concurrency-conformance",
+        "revision" : "cfba4dddf3cb5206eb73aa3f6ac8dc6daf2f6361"
+      }
+    },
+    {
+      "identity" : "simplehaptic",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lukacs-m/SimpleHaptic",
+      "state" : {
+        "branch" : "main",
+        "revision" : "30ee2aee8ae454d72ed6985a0ff7dd5b79a7c04c"
+      }
+    },
+    {
+      "identity" : "simpletoast",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lukacs-m/SimpleToast",
+      "state" : {
+        "revision" : "3865f2aeb5bcbb1a6b79ad2687c9eba654443288",
+        "version" : "0.1.2"
+      }
+    }
+  ],
+  "version" : 3
+}
