@@ -7,14 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B8327E9D2D04E47900DC1AC1 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = B8327E9C2D04E47900DC1AC1 /* Factory */; };
+		B8327F062D0E45AD00DC1AC1 /* DataLayer in Frameworks */ = {isa = PBXBuildFile; productRef = B8327F052D0E45AD00DC1AC1 /* DataLayer */; };
+		B8327F082D0E45B100DC1AC1 /* DomainLayer in Frameworks */ = {isa = PBXBuildFile; productRef = B8327F072D0E45B100DC1AC1 /* DomainLayer */; };
 		B86B5AB42C56DEA3003BBEE4 /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = B86B5AB32C56DEA3003BBEE4 /* Models */; };
 		B86B5AB62C56F41B003BBEE4 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = B86B5AB52C56F41B003BBEE4 /* Models */; };
 		B86B5AB92C56F4BD003BBEE4 /* DataLayer in Resources */ = {isa = PBXBuildFile; fileRef = B86B5AB72C56F4BD003BBEE4 /* DataLayer */; };
 		B86B5ABA2C56F4BD003BBEE4 /* DomainLayer in Resources */ = {isa = PBXBuildFile; fileRef = B86B5AB82C56F4BD003BBEE4 /* DomainLayer */; };
-		B86B5ABD2C56F54F003BBEE4 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = B86B5ABC2C56F54F003BBEE4 /* Factory */; };
-		B86B5AC02C56F569003BBEE4 /* SimpleHaptic in Frameworks */ = {isa = PBXBuildFile; productRef = B86B5ABF2C56F569003BBEE4 /* SimpleHaptic */; };
 		B86B5AC32C56F580003BBEE4 /* SimpleToast in Frameworks */ = {isa = PBXBuildFile; productRef = B86B5AC22C56F580003BBEE4 /* SimpleToast */; };
 		B86B5AD82C56F670003BBEE4 /* SimplyPersist in Frameworks */ = {isa = PBXBuildFile; productRef = B86B5AD72C56F670003BBEE4 /* SimplyPersist */; };
+		B86B5ADB2C584498003BBEE4 /* DocScanner in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = B86B5ADA2C584498003BBEE4 /* DocScanner */; };
+		B86B5ADE2C5844BC003BBEE4 /* SimpleKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = B86B5ADD2C5844BC003BBEE4 /* SimpleKeychain */; };
+		B86B5AE12C5844F5003BBEE4 /* OneTimePassword in Frameworks */ = {isa = PBXBuildFile; productRef = B86B5AE02C5844F5003BBEE4 /* OneTimePassword */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,10 +58,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8327F062D0E45AD00DC1AC1 /* DataLayer in Frameworks */,
 				B86B5AC32C56F580003BBEE4 /* SimpleToast in Frameworks */,
+				B8327F082D0E45B100DC1AC1 /* DomainLayer in Frameworks */,
 				B86B5AB42C56DEA3003BBEE4 /* Models in Frameworks */,
-				B86B5AC02C56F569003BBEE4 /* SimpleHaptic in Frameworks */,
-				B86B5ABD2C56F54F003BBEE4 /* Factory in Frameworks */,
+				B8327E9D2D04E47900DC1AC1 /* Factory in Frameworks */,
+				B86B5ADB2C584498003BBEE4 /* DocScanner in Frameworks */,
+				B86B5AE12C5844F5003BBEE4 /* OneTimePassword in Frameworks */,
+				B86B5ADE2C5844BC003BBEE4 /* SimpleKeychain in Frameworks */,
 				B86B5AD82C56F670003BBEE4 /* SimplyPersist in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -79,6 +87,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B8327F042D0E45AD00DC1AC1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B86B5A772C56DD8D003BBEE4 = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +103,7 @@
 				B86B5AB72C56F4BD003BBEE4 /* DataLayer */,
 				B86B5AB82C56F4BD003BBEE4 /* DomainLayer */,
 				B86B5AB52C56F41B003BBEE4 /* Models */,
+				B8327F042D0E45AD00DC1AC1 /* Frameworks */,
 				B86B5A812C56DD8D003BBEE4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -109,6 +125,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B86B5AA72C56DD8F003BBEE4 /* Build configuration list for PBXNativeTarget "AuthKeeper" */;
 			buildPhases = (
+				B86B5AE22C584748003BBEE4 /* Swiftformat */,
+				B86B5AE32C58476C003BBEE4 /* Swiftlint */,
 				B86B5A7C2C56DD8D003BBEE4 /* Sources */,
 				B86B5A7D2C56DD8D003BBEE4 /* Frameworks */,
 				B86B5A7E2C56DD8D003BBEE4 /* Resources */,
@@ -123,10 +141,14 @@
 			name = AuthKeeper;
 			packageProductDependencies = (
 				B86B5AB32C56DEA3003BBEE4 /* Models */,
-				B86B5ABC2C56F54F003BBEE4 /* Factory */,
-				B86B5ABF2C56F569003BBEE4 /* SimpleHaptic */,
 				B86B5AC22C56F580003BBEE4 /* SimpleToast */,
 				B86B5AD72C56F670003BBEE4 /* SimplyPersist */,
+				B86B5ADA2C584498003BBEE4 /* DocScanner */,
+				B86B5ADD2C5844BC003BBEE4 /* SimpleKeychain */,
+				B86B5AE02C5844F5003BBEE4 /* OneTimePassword */,
+				B8327E9C2D04E47900DC1AC1 /* Factory */,
+				B8327F052D0E45AD00DC1AC1 /* DataLayer */,
+				B8327F072D0E45B100DC1AC1 /* DomainLayer */,
 			);
 			productName = AuthKeeper;
 			productReference = B86B5A802C56DD8D003BBEE4 /* AuthKeeper.app */;
@@ -186,7 +208,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1600;
-				LastUpgradeCheck = 1600;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					B86B5A7F2C56DD8D003BBEE4 = {
 						CreatedOnToolsVersion = 16.0;
@@ -211,10 +233,12 @@
 			);
 			mainGroup = B86B5A772C56DD8D003BBEE4;
 			packageReferences = (
-				B86B5ABB2C56F54F003BBEE4 /* XCRemoteSwiftPackageReference "Factory" */,
-				B86B5ABE2C56F569003BBEE4 /* XCRemoteSwiftPackageReference "SimpleHaptic" */,
 				B86B5AC12C56F580003BBEE4 /* XCRemoteSwiftPackageReference "SimpleToast" */,
 				B86B5AD62C56F66F003BBEE4 /* XCLocalSwiftPackageReference "../../SwiftPackages/SimplyPersist" */,
+				B86B5AD92C584498003BBEE4 /* XCRemoteSwiftPackageReference "DocScanner" */,
+				B86B5ADC2C5844BC003BBEE4 /* XCRemoteSwiftPackageReference "SimpleKeychain" */,
+				B86B5ADF2C5844F5003BBEE4 /* XCRemoteSwiftPackageReference "OneTimePassword" */,
+				B8327E9B2D04E47900DC1AC1 /* XCRemoteSwiftPackageReference "Factory" */,
 			);
 			productRefGroup = B86B5A812C56DD8D003BBEE4 /* Products */;
 			projectDirPath = "";
@@ -253,6 +277,47 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B86B5AE22C584748003BBEE4 /* Swiftformat */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftformat;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH=/opt/homebrew/bin/:$PATH\n\nif which swiftformat >/dev/null; then\nswiftformat .\nelse\necho \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+		};
+		B86B5AE32C58476C003BBEE4 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH=/opt/homebrew/bin/:$PATH\n\nif which swiftlint >/dev/null; then\n  swiftlint --fix && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B86B5A7C2C56DD8D003BBEE4 /* Sources */ = {
@@ -326,10 +391,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -350,6 +416,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -387,10 +454,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -403,6 +471,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
@@ -414,6 +483,7 @@
 				CODE_SIGN_ENTITLEMENTS = AuthKeeper/AuthKeeper.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"AuthKeeper/Preview Content\"";
 				DEVELOPMENT_TEAM = HG67WS83RZ;
 				ENABLE_PREVIEWS = YES;
@@ -431,14 +501,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mlukacs.AuthKeeper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -452,6 +522,7 @@
 				CODE_SIGN_ENTITLEMENTS = AuthKeeper/AuthKeeper.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"AuthKeeper/Preview Content\"";
 				DEVELOPMENT_TEAM = HG67WS83RZ;
 				ENABLE_PREVIEWS = YES;
@@ -469,14 +540,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mlukacs.AuthKeeper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -488,6 +559,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
@@ -510,6 +582,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
@@ -531,6 +604,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
@@ -552,6 +626,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
@@ -617,20 +692,12 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B86B5ABB2C56F54F003BBEE4 /* XCRemoteSwiftPackageReference "Factory" */ = {
+		B8327E9B2D04E47900DC1AC1 /* XCRemoteSwiftPackageReference "Factory" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/lukacs-m/Factory";
+			repositoryURL = "https://github.com/hmlongco/Factory";
 			requirement = {
-				branch = "feature/structured-concurrency-conformance";
-				kind = branch;
-			};
-		};
-		B86B5ABE2C56F569003BBEE4 /* XCRemoteSwiftPackageReference "SimpleHaptic" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/lukacs-m/SimpleHaptic";
-			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.3;
 			};
 		};
 		B86B5AC12C56F580003BBEE4 /* XCRemoteSwiftPackageReference "SimpleToast" */ = {
@@ -638,25 +705,52 @@
 			repositoryURL = "https://github.com/lukacs-m/SimpleToast";
 			requirement = {
 				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.3;
+			};
+		};
+		B86B5AD92C584498003BBEE4 /* XCRemoteSwiftPackageReference "DocScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lukacs-m/DocScanner";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		B86B5ADC2C5844BC003BBEE4 /* XCRemoteSwiftPackageReference "SimpleKeychain" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lukacs-m/SimpleKeychain";
+			requirement = {
+				kind = upToNextMajorVersion;
 				minimumVersion = 0.1.2;
+			};
+		};
+		B86B5ADF2C5844F5003BBEE4 /* XCRemoteSwiftPackageReference "OneTimePassword" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lukacs-m/OneTimePassword";
+			requirement = {
+				branch = develop;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B8327E9C2D04E47900DC1AC1 /* Factory */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B8327E9B2D04E47900DC1AC1 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = Factory;
+		};
+		B8327F052D0E45AD00DC1AC1 /* DataLayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DataLayer;
+		};
+		B8327F072D0E45B100DC1AC1 /* DomainLayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DomainLayer;
+		};
 		B86B5AB32C56DEA3003BBEE4 /* Models */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Models;
-		};
-		B86B5ABC2C56F54F003BBEE4 /* Factory */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B86B5ABB2C56F54F003BBEE4 /* XCRemoteSwiftPackageReference "Factory" */;
-			productName = Factory;
-		};
-		B86B5ABF2C56F569003BBEE4 /* SimpleHaptic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B86B5ABE2C56F569003BBEE4 /* XCRemoteSwiftPackageReference "SimpleHaptic" */;
-			productName = SimpleHaptic;
 		};
 		B86B5AC22C56F580003BBEE4 /* SimpleToast */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -666,6 +760,21 @@
 		B86B5AD72C56F670003BBEE4 /* SimplyPersist */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SimplyPersist;
+		};
+		B86B5ADA2C584498003BBEE4 /* DocScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B86B5AD92C584498003BBEE4 /* XCRemoteSwiftPackageReference "DocScanner" */;
+			productName = DocScanner;
+		};
+		B86B5ADD2C5844BC003BBEE4 /* SimpleKeychain */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B86B5ADC2C5844BC003BBEE4 /* XCRemoteSwiftPackageReference "SimpleKeychain" */;
+			productName = SimpleKeychain;
+		};
+		B86B5AE02C5844F5003BBEE4 /* OneTimePassword */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B86B5ADF2C5844F5003BBEE4 /* XCRemoteSwiftPackageReference "OneTimePassword" */;
+			productName = OneTimePassword;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

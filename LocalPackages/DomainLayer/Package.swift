@@ -5,12 +5,12 @@ import PackageDescription
 
 let package = Package(
     name: "DomainLayer",
-    platforms: [.macOS(.v10_15), .iOS(.v13), .tvOS(.v13), .watchOS(.v6), .macCatalyst(.v13)],
+    platforms: [.macOS(.v15), .iOS(.v18), .tvOS(.v13), .watchOS(.v6), .macCatalyst(.v13)],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "DomainLayer",
-            targets: ["DomainLayer"]),
+            targets: ["DomainLayer"])
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -20,6 +20,6 @@ let package = Package(
         .testTarget(
             name: "DomainLayerTests",
             dependencies: ["DomainLayer"]
-        ),
+        )
     ]
 )
