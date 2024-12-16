@@ -1,22 +1,40 @@
 {
-  "originHash" : "8da640e74fa0a52154c5e74b5d1c837a43b4d7c70e85a137eb38e6621adfc360",
+  "originHash" : "068cdfe91616b41e308b335ecae14d2025ed52f30672070732ba78bea23cffec",
   "pins" : [
     {
-      "identity" : "factory",
+      "identity" : "docscanner",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/lukacs-m/Factory",
+      "location" : "https://github.com/lukacs-m/DocScanner",
       "state" : {
-        "branch" : "feature/structured-concurrency-conformance",
-        "revision" : "cfba4dddf3cb5206eb73aa3f6ac8dc6daf2f6361"
+        "branch" : "main",
+        "revision" : "e1a1216ae4f9e38793ab2dbe21035fd46749a8c3"
       }
     },
     {
-      "identity" : "simplehaptic",
+      "identity" : "factory",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/lukacs-m/SimpleHaptic",
+      "location" : "https://github.com/hmlongco/Factory",
       "state" : {
-        "branch" : "main",
-        "revision" : "30ee2aee8ae454d72ed6985a0ff7dd5b79a7c04c"
+        "revision" : "fb04a8918848e413d3921d346a23bae7f81088d9",
+        "version" : "2.4.3"
+      }
+    },
+    {
+      "identity" : "onetimepassword",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lukacs-m/OneTimePassword",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "4c3a5402d58dc1f767c997754c5430491566a100"
+      }
+    },
+    {
+      "identity" : "simplekeychain",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lukacs-m/SimpleKeychain",
+      "state" : {
+        "revision" : "a41b93b2565cc53ed26e547f013590dd484afb06",
+        "version" : "0.1.2"
       }
     },
     {
@@ -24,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/lukacs-m/SimpleToast",
       "state" : {
-        "revision" : "3865f2aeb5bcbb1a6b79ad2687c9eba654443288",
-        "version" : "0.1.2"
+        "revision" : "d6f17f500add81e3b70c96b67bf6c9f0265b906a",
+        "version" : "0.1.3"
       }
     }
   ],
