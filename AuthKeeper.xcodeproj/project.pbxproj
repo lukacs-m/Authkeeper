@@ -15,7 +15,6 @@
 		B86B5AB92C56F4BD003BBEE4 /* DataLayer in Resources */ = {isa = PBXBuildFile; fileRef = B86B5AB72C56F4BD003BBEE4 /* DataLayer */; };
 		B86B5ABA2C56F4BD003BBEE4 /* DomainLayer in Resources */ = {isa = PBXBuildFile; fileRef = B86B5AB82C56F4BD003BBEE4 /* DomainLayer */; };
 		B86B5AC32C56F580003BBEE4 /* SimpleToast in Frameworks */ = {isa = PBXBuildFile; productRef = B86B5AC22C56F580003BBEE4 /* SimpleToast */; };
-		B86B5AD82C56F670003BBEE4 /* SimplyPersist in Frameworks */ = {isa = PBXBuildFile; productRef = B86B5AD72C56F670003BBEE4 /* SimplyPersist */; };
 		B86B5ADB2C584498003BBEE4 /* DocScanner in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = B86B5ADA2C584498003BBEE4 /* DocScanner */; };
 		B86B5ADE2C5844BC003BBEE4 /* SimpleKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = B86B5ADD2C5844BC003BBEE4 /* SimpleKeychain */; };
 		B86B5AE12C5844F5003BBEE4 /* OneTimePassword in Frameworks */ = {isa = PBXBuildFile; productRef = B86B5AE02C5844F5003BBEE4 /* OneTimePassword */; };
@@ -66,7 +65,6 @@
 				B86B5ADB2C584498003BBEE4 /* DocScanner in Frameworks */,
 				B86B5AE12C5844F5003BBEE4 /* OneTimePassword in Frameworks */,
 				B86B5ADE2C5844BC003BBEE4 /* SimpleKeychain in Frameworks */,
-				B86B5AD82C56F670003BBEE4 /* SimplyPersist in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,7 +140,6 @@
 			packageProductDependencies = (
 				B86B5AB32C56DEA3003BBEE4 /* Models */,
 				B86B5AC22C56F580003BBEE4 /* SimpleToast */,
-				B86B5AD72C56F670003BBEE4 /* SimplyPersist */,
 				B86B5ADA2C584498003BBEE4 /* DocScanner */,
 				B86B5ADD2C5844BC003BBEE4 /* SimpleKeychain */,
 				B86B5AE02C5844F5003BBEE4 /* OneTimePassword */,
@@ -234,7 +231,6 @@
 			mainGroup = B86B5A772C56DD8D003BBEE4;
 			packageReferences = (
 				B86B5AC12C56F580003BBEE4 /* XCRemoteSwiftPackageReference "SimpleToast" */,
-				B86B5AD62C56F66F003BBEE4 /* XCLocalSwiftPackageReference "../../SwiftPackages/SimplyPersist" */,
 				B86B5AD92C584498003BBEE4 /* XCRemoteSwiftPackageReference "DocScanner" */,
 				B86B5ADC2C5844BC003BBEE4 /* XCRemoteSwiftPackageReference "SimpleKeychain" */,
 				B86B5ADF2C5844F5003BBEE4 /* XCRemoteSwiftPackageReference "OneTimePassword" */,
@@ -684,13 +680,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		B86B5AD62C56F66F003BBEE4 /* XCLocalSwiftPackageReference "../../SwiftPackages/SimplyPersist" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../SwiftPackages/SimplyPersist;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
 		B8327E9B2D04E47900DC1AC1 /* XCRemoteSwiftPackageReference "Factory" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -756,10 +745,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B86B5AC12C56F580003BBEE4 /* XCRemoteSwiftPackageReference "SimpleToast" */;
 			productName = SimpleToast;
-		};
-		B86B5AD72C56F670003BBEE4 /* SimplyPersist */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SimplyPersist;
 		};
 		B86B5ADA2C584498003BBEE4 /* DocScanner */ = {
 			isa = XCSwiftPackageProductDependency;

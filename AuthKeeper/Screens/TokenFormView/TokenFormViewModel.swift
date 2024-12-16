@@ -12,12 +12,6 @@ import Foundation
 import Models
 import OneTimePassword
 
-// enum TokenType: String, CaseIterable, Identifiable {
-//    case totp, hotp
-//
-//    var id: Self { self }
-// }
-
 extension Generator.Algorithm: @retroactive CaseIterable, @retroactive Identifiable {
     public static var allCases: [Generator.Algorithm] { [.sha1, .sha256, .sha512] }
 
