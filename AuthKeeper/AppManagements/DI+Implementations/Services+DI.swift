@@ -19,6 +19,6 @@ final class ServiceContainer: SharedContainer, AutoRegistering, Sendable {
 
 extension ServiceContainer {
     var tokensDataService: Factory<any TokensDataServicing> {
-        self { TokensDataService() }
+        self { @MainActor in TokensDataService(tokenRepository: RepositoryContainer.shared.tokenRepository()) }
     }
 }

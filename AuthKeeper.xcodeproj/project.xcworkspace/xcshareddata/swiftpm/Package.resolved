@@ -1,5 +1,5 @@
 {
-  "originHash" : "068cdfe91616b41e308b335ecae14d2025ed52f30672070732ba78bea23cffec",
+  "originHash" : "30c236f2e51b5ce2c749cf5e819f8a855ca20ef7e6b561b9787a6301446b791d",
   "pins" : [
     {
       "identity" : "docscanner",
@@ -25,7 +25,7 @@
       "location" : "https://github.com/lukacs-m/OneTimePassword",
       "state" : {
         "branch" : "develop",
-        "revision" : "4c3a5402d58dc1f767c997754c5430491566a100"
+        "revision" : "ac1030fd84c7ec6fae81de80e9caabf226c0ffc6"
       }
     },
     {
@@ -44,6 +44,15 @@
       "state" : {
         "revision" : "d6f17f500add81e3b70c96b67bf6c9f0265b906a",
         "version" : "0.1.3"
+      }
+    },
+    {
+      "identity" : "simplypersist",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lukacs-m/SimplyPersist",
+      "state" : {
+        "branch" : "main",
+        "revision" : "ef2acb4054bdfd982ceb1b74e1752b01cf066332"
       }
     }
   ],

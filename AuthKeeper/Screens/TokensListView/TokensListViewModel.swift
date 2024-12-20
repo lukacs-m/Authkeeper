@@ -61,13 +61,21 @@ final class TokensListViewModel: Sendable {
 
     func delete(token: TokenData) {
         Task {
-            await tokensDataService.delete(token: token)
+            do {
+                try await tokensDataService.delete(token: token)
+            } catch {
+                print(error)
+            }
         }
     }
 
     func toggleFavorite(token: TokenData) {
         Task {
-            await tokensDataService.delete(token: token)
+            do {
+//                await tokensDataService.delete(token: token)
+            } catch {
+                print(error)
+            }
         }
     }
 }

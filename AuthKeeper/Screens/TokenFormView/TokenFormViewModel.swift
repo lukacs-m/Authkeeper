@@ -82,7 +82,7 @@ final class TokenFormViewModel: Sendable {
                                       widgetActivated: includeInWidget,
                                       complementaryInfos: complementaryInformation
                                           .isEmpty ? nil : complementaryInformation)
-            await tokensDataService.addToken(token: tokenData)
+            try await tokensDataService.addToken(token: tokenData)
         } catch {
             print("Error saving token: \(error)")
         }

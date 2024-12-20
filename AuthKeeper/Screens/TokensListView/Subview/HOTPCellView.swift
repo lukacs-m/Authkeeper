@@ -66,8 +66,12 @@ final class HOTPCellViewModel {
     func updateHotpToken() {
         guard let item, item.type == .hotp else { return }
         Task {
-            await tokensDataService.update(token: item.updatedToken())
-            animate.toggle()
+            do {
+                try await tokensDataService.update(token: item.updatedToken())
+                animate.toggle()
+            } catch {
+                print(error)
+            }
         }
     }
 }

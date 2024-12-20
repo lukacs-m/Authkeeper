@@ -13,6 +13,7 @@ let package = Package(
             targets: ["DataLayer"])
     ],
     dependencies: [
+        .package(url: "https://github.com/lukacs-m/SimplyPersist", branch: "main"),
         .package(name: "Models", path: "../Models")
     ],
     targets: [
@@ -21,6 +22,7 @@ let package = Package(
         .target(
             name: "DataLayer",
             dependencies: [
+                .product(name: "SimplyPersist", package: "SimplyPersist"),
                 .product(name: "Models", package: "Models")
             ]),
         .testTarget(
