@@ -17,31 +17,58 @@ struct HOTPCellView: View {
     }
 
     var body: some View {
-        HStack {
+        VStack {
             if let item = viewModel.item {
-                VStack(alignment: .leading) {
-                    Text("\(item.token.issuer) - \(item.token.name)")
-                        .font(.headline)
-
+                if let title = item.name {
+                    Text(title)
+                        .font(.system(.title2, design: .rounded))
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("\(item.token.issuer)")
+                            .font(.system(.headline, design: .rounded))
+                            .foregroundStyle(.secondaryText)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        if !item.token.name.isEmpty {
+                            Text("\(item.token.name)")
+                                .font(.system(.headline, design: .rounded))
+                                .foregroundStyle(.secondaryText)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                    .foregroundStyle(.primaryText)
+                    .frame(maxWidth: .infinity)
+                    ZStack {
+                        HStack {
+                            Divider()
+                                .overlay(Color.secondaryText)
+                        }
+                        Button {
+                            viewModel.updateHotpToken()
+                        } label: {
+                            Image(systemName: "arrow.trianglehead.counterclockwise.rotate.90")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 35, height: 35)
+                                .foregroundStyle(Color.main)
+                        }
+                        .buttonStyle(.plain)
+                        .font(.caption)
+                        .symbolEffect(.rotate.counterClockwise.wholeSymbol,
+                                      options: .speed(3).nonRepeating,
+                                      value: viewModel.animate)
+                        .padding(.vertical, 3)
+                        .background(Color.background)
+                    }
                     Text(item.totp ?? "")
-                        .font(.largeTitle)
+                        .font(.system(.title, design: .rounded))
                         .bold()
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .foregroundStyle(.primaryText)
                 }
             }
-            Spacer()
-            Button {
-                viewModel.updateHotpToken()
-            } label: {
-                Image(systemName: "arrow.trianglehead.counterclockwise.rotate.90")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 30, height: 30)
-            }
-            .buttonStyle(.plain)
-            .font(.caption)
-            .symbolEffect(.rotate.counterClockwise.wholeSymbol,
-                          options: .speed(3).nonRepeating,
-                          value: viewModel.animate)
         }
     }
 }

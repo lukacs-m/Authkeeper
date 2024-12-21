@@ -1,5 +1,5 @@
 //
-//  Repository+DI.swift
+//  Repositories+DI.swift
 //  AuthKeeper
 //
 //  Created by Martin Lukacs on 18/12/2024.

@@ -10,31 +10,16 @@ import SwiftUI
 
 @main
 struct AuthKeeperApp: App {
-//    var sharedModelContainer: ModelContainer = {
-//        let schema = Schema([
-//            Item.self
-//        ])
-//        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-//
-//        do {
-//            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-//        } catch {
-//            fatalError("Could not create ModelContainer: \(error)")
-//        }
-//    }()
+    @State private var appConfiguration = ServiceContainer.shared.appConfigurationService()
 
     var body: some Scene {
-//        WindowGroup {
-//            ContentView()
-//        }
-//        .modelContainer(sharedModelContainer)
         WindowGroup {
             RootView()
+                .preferredColorScheme(appConfiguration.colorScheme.preferredColorScheme)
             #if os(macOS)
                 .frame(minWidth: 729, minHeight: 480)
             #endif
         }
-//        .modelContainer(sharedModelContainer)
         #if os(macOS)
         .windowResizability(.contentMinSize)
         #endif

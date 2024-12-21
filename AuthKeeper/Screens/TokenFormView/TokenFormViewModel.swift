@@ -41,7 +41,7 @@ final class TokenFormViewModel: Sendable {
     var complementaryInformation: String = ""
 
     var canSave: Bool {
-        !issuer.isEmpty && secret.count >= 4
+        !issuer.isEmpty && secret.count >= 4 && !account.isEmpty
     }
 
     @ObservationIgnored

@@ -9,13 +9,14 @@ import Models
 import SwiftUI
 
 public enum RouterDestination: Hashable {
-    case test
+    case appereance
 }
 
 public enum SheetDestination: Hashable, Identifiable {
     public var id: Int { hashValue }
 
     case createEditToken(TokenData?)
+    case settings
 }
 
 @MainActor
@@ -71,19 +72,41 @@ final class Router {
 public struct RouterEmbeded: ViewModifier {
     public func body(content: Content) -> some View {
         content
-            .navigationDestination(for: RouterDestination.self) { _ in
-//        switch destination {
-
-//        }
+            .navigationDestination(for: RouterDestination.self) { destination in
+                switch destination {
+                case .appereance:
+                    AppearanceView()
+                }
             }
     }
 }
 
 public extension View {
-    func routingProvided() -> some View {
+    var routingProvided: some View {
         modifier(RouterEmbeded())
     }
+
+    func withSheetDestinations(sheetDestinations: Binding<SheetDestination?>) -> some View {
+        sheet(item: sheetDestinations) { destination in
+            switch destination {
+            case let .createEditToken(token):
+                TokenFormView(item: token)
+            case .settings:
+                SettingsView()
+            }
+        }
+    }
 }
+
+//    .sheet(item: $router.presentedSheet,
+//           content: { presentedSheet in
+//               switch presentedSheet {
+//               case let .createEditToken(token):
+//                   TokenFormView(item: token)
+//               case .settings:
+//                   SettingsView()
+//               }
+//           })
 
 //
 // @Observable

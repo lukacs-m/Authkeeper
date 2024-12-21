@@ -17,41 +17,50 @@ struct TokensListView: View {
     var body: some View {
         List {
             ForEach(viewModel.getTokens()) { token in
-                VStack(alignment: .leading) {
-                    row(token: token)
-                        .swipeActions {
-                            Button {
-                                viewModel.toggleFavorite(token: token)
-                            } label: {
-                                Label("Favorite", systemImage: token.isFavorite ? "star.slash" : "star")
-                            }
-                            .tint(.blue)
-
-                            Button {
-                                router.presentedSheet = .createEditToken(token)
-                            } label: {
-                                Label("Edit", systemImage: "pencil")
-                            }
-                            .tint(.yellow)
-
-                            Button {
-                                viewModel.delete(token: token)
-                            } label: {
-                                Label("Delete", systemImage: "trash.fill")
-                            }
-                            .tint(.red)
+                row(token: token)
+                    .neumorphic()
+                    .listRowBackground(Color.background)
+                    .listRowSeparator(.hidden)
+                    .swipeActions {
+                        Button {
+                            viewModel.toggleFavorite(token: token)
+                        } label: {
+                            Label("Favorite", systemImage: token.isFavorite ? "star.slash" : "star")
+                                .contrastedText
                         }
-                        .contextMenu {
-                            Button {
-                                router.presentedSheet = .createEditToken(token)
-                            } label: {
-                                Label("Edit", systemImage: "pencil")
-                            }
+                        .tint(.blue)
+
+                        Button {
+                            router.presentedSheet = .createEditToken(token)
+                        } label: {
+                            Label("Edit", systemImage: "pencil")
+                                .contrastedText
                         }
-                }
+                        .tint(.yellow)
+
+                        Button {
+                            viewModel.delete(token: token)
+                        } label: {
+                            Label("Delete", systemImage: "trash.fill")
+                                .contrastedText
+                        }
+                        .tint(.error)
+                    }
+                    .contextMenu {
+                        Button {
+                            router.presentedSheet = .createEditToken(token)
+                        } label: {
+                            Label("Edit", systemImage: "pencil")
+                                .baseRoundedText
+                        }
+                    }
             }
-//                .onDelete(perform: deleteEntries)
+            //                .onDelete(perform: deleteEntries)
         }
+        .listStyle(.plain)
+        .listRowSpacing(15)
+        .scrollContentBackground(.hidden)
+        .background(Color.background.edgesIgnoringSafeArea(.all))
         .animation(.default, value: viewModel.getTokens())
         .onAppear {
             viewModel.startTimer()

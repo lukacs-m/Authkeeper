@@ -21,4 +21,8 @@ extension ServiceContainer {
     var tokensDataService: Factory<any TokensDataServicing> {
         self { @MainActor in TokensDataService(tokenRepository: RepositoryContainer.shared.tokenRepository()) }
     }
+
+    var appConfigurationService: Factory<any AppConfigurationServicing> {
+        self { @MainActor in AppConfigurationService() }
+    }
 }

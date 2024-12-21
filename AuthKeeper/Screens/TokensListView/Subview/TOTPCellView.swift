@@ -19,20 +19,55 @@ struct TOTPCellView: View {
     }
 
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text("\(viewModel.item.token.issuer) - \(viewModel.item.token.name)")
-                    .font(.headline)
-
-                Text(viewModel.code)
-                    .font(.largeTitle)
-                    .bold()
+        VStack {
+            ZStack(alignment: .trailing) {
+                if let title = viewModel.item.name {
+                    Text(title)
+                        .font(.system(.title2, design: .rounded))
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
+                if viewModel.item.isFavorite {
+                    Image(systemName: "start")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .foregroundStyle(.yellow)
+                        .padding(.trailing, 10)
+                }
             }
-            Spacer()
-            CircularProgressView(progress: viewModel.progress,
-                                 countdown: Int(viewModel.remainingTime),
-                                 size: 30,
-                                 lineWidth: 2)
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("\(viewModel.item.token.issuer)")
+                        .font(.system(.headline, design: .rounded))
+                        .foregroundStyle(.secondaryText)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    if !viewModel.item.token.name.isEmpty {
+                        Text("\(viewModel.item.token.name)")
+                            .font(.system(.headline, design: .rounded))
+                            .foregroundStyle(.secondaryText)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }
+                .foregroundStyle(.primaryText)
+                .frame(maxWidth: .infinity)
+                ZStack {
+                    HStack {
+                        Divider()
+                            .overlay(Color.primaryText)
+                    }
+                    CircularProgressView(progress: viewModel.progress,
+                                         countdown: Int(viewModel.remainingTime),
+                                         size: 35,
+                                         lineWidth: 2)
+                        .padding(.vertical, 3)
+                        .background(Color.background)
+                }
+                Text(viewModel.code)
+                    .font(.system(.title, design: .rounded))
+                    .bold()
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .foregroundStyle(.primaryText)
+            }
         }
         .onChange(of: timeRemaining) {
             viewModel.updateTOTP()

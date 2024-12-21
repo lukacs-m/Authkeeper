@@ -38,32 +38,45 @@ struct RootView: View {
             #endif
                 .toolbar {
                     #if os(iOS)
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        EditButton()
-                    }
-
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button { /* isShowingScanner = true */ } label: {
-                            Label("Scan QR", systemImage: "qrcode.viewfinder")
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Menu {
+                            Button {} label: {
+                                Label("Scan QR", systemImage: "qrcode.viewfinder")
+                            }
+                            Button { router.presentedSheet = .createEditToken(nil) } label: {
+                                Label("Add", systemImage: "plus")
+                            }
+                            Button { router.presentedSheet = .createEditToken(nil) } label: {
+                                Label("Import", systemImage: "square.and.arrow.down")
+                            }
+                        } label: {
+                            Image(systemName: "line.3.horizontal")
+                                .foregroundStyle(Color.main)
                         }
                     }
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button { router.presentedSheet = .createEditToken(nil) } label: {
-                            Label("Add", systemImage: "plus")
+
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button { router.presentedSheet = .settings } label: {
+                            Label("Settings", systemImage: "gear")
+                                .foregroundStyle(Color.main)
                         }
                     }
                     #endif
                 }
-                .sheet(item: $router.presentedSheet,
-                       content: { presentedSheet in
-                           switch presentedSheet {
-                           case let .createEditToken(token):
-                               TokenFormView(item: token)
-                           }
-                       })
+                .withSheetDestinations(sheetDestinations: $router.presentedSheet)
+//                .sheet(item: $router.presentedSheet,
+//                       content: { presentedSheet in
+//                           switch presentedSheet {
+//                           case let .createEditToken(token):
+//                               TokenFormView(item: token)
+//                           case .settings:
+//                               SettingsView()
+//                           }
+//                       })
         } detail: {
             Text("Select an Totp entry")
         }
+        .accentColor(.main)
     }
 }
 

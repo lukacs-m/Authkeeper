@@ -24,15 +24,25 @@ struct CircularProgressView: View {
             // Progress Circle
             Circle()
                 .trim(from: 0, to: progress)
-                .stroke(countdown > 5 ? Color.blue : Color.red,
+                .stroke(progressColor,
                         style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
                 .rotationEffect(.degrees(-90)) // Start at the top
                 .frame(width: size, height: size)
 
             // Timer Text
-            Text("\(countdown)s")
+            Text("\(countdown)")
                 .font(.caption)
-                .foregroundColor(.primary)
+                .foregroundColor(Color.primaryText)
+        }
+    }
+
+    private var progressColor: Color {
+        if countdown > 10 {
+            Color.secondaryAction
+        } else if 5...10 ~= countdown {
+            .orange
+        } else {
+            .error
         }
     }
 }
