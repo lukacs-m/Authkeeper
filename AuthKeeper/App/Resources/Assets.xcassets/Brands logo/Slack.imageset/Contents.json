@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Slack.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

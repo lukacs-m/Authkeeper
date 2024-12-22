@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Kirby.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

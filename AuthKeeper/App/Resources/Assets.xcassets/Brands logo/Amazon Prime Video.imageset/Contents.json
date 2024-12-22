@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Amazon Prime Video.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

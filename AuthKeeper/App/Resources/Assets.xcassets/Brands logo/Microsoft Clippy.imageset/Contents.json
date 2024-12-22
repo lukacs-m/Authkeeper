@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Microsoft Clippy.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

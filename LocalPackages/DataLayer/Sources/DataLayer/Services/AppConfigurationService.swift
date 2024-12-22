@@ -54,69 +54,36 @@ public final class AppConfigurationService: AppConfigurationServicing {
     private let hideTokensKey = "hideTokens"
     private let showNextTokensKey = "showNextTokens"
 
-    public var showNextTokens: Bool = false {
+    public var showNextTokens: Bool {
         didSet {
-            userDefaults.set(colorScheme.rawValue, forKey: showNextTokensKey)
+            userDefaults.set(showNextTokens, forKey: showNextTokensKey)
         }
     }
 
-    public var hideTokens: Bool = false {
+    public var hideTokens: Bool {
         didSet {
-            userDefaults.set(colorScheme.rawValue, forKey: hideTokensKey)
+            userDefaults.set(hideTokens, forKey: hideTokensKey)
         }
     }
 
-    public var colorScheme: ColorSchemeOption = .system {
+    public var colorScheme: ColorSchemeOption {
         didSet {
-//            keyWindow?.overrideUserInterfaceStyle = colorScheme.interfaceStyle
             userDefaults.set(colorScheme.rawValue, forKey: colorSchemeKey)
         }
     }
 
     public init(userDefaults: UserDefaults = .standard) {
         self.userDefaults = userDefaults
-        setUp()
-    }
-
-    func setUp() {
+        hideTokens = userDefaults.bool(forKey: hideTokensKey)
+        showNextTokens = userDefaults.bool(forKey: showNextTokensKey)
         if let savedValue = userDefaults.string(forKey: colorSchemeKey),
            let scheme = ColorSchemeOption(rawValue: savedValue) {
             colorScheme = scheme
+        } else {
+            colorScheme = .system
         }
-
-        hideTokens = userDefaults.bool(forKey: hideTokensKey)
-        showNextTokens = userDefaults.bool(forKey: showNextTokensKey)
+        setUp()
     }
 
-//
-//    public func updateColorScheme(newColorScheme: ColorSchemeOption) async throws {
-//        colorScheme = newColorScheme
-//    }
-
-//    var keyWindow: UIWindow? {
-//        let scenes = UIApplication.shared.connectedScenes
-//
-//        let windowScene = scenes.first as? UIWindowScene
-//
-//        return windowScene?.windows.first
-//
-    ////        guard let window = UIApplication.shared.connectedScenes
-    ////            .compactMap({ $0 as? UIWindowScene })
-    ////            .flatMap(\.windows)
-    ////            .first(where: { $0.isKeyWindow })
-    ////        else {
-    ////            return nil
-    ////        }
-    ////        return window
-//    }
+    func setUp() {}
 }
-
-//
-// func handleTheme(darkMode: Bool, system: Bool) {
-//
-//    guard !system else {
-//        UIApplication.shared.windows.first?.overrideUserInterfaceStyle = .unspecified
-//        return
-//    }
-//    UIApplication.shared.windows.first?.overrideUserInterfaceStyle = darkMode ? .dark : .light
-// }

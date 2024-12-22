@@ -17,6 +17,7 @@ public enum SheetDestination: Hashable, Identifiable {
 
     case createEditToken(TokenData?)
     case settings
+    case barcodeScanner
 }
 
 @MainActor
@@ -93,6 +94,8 @@ public extension View {
                 TokenFormView(item: token)
             case .settings:
                 SettingsView()
+            case .barcodeScanner:
+                ScannerView()
             }
         }
     }

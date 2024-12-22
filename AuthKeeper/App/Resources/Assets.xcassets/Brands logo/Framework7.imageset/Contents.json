@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Framework7.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

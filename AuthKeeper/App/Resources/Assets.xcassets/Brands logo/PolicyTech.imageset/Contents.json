@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "PolicyTech.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

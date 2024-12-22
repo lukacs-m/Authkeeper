@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "I Love New York.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

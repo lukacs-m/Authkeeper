@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "SonarQube.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

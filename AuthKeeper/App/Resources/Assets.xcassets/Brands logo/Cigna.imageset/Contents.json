@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Cigna.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

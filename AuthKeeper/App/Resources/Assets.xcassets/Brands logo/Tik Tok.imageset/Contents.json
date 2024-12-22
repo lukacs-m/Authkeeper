@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Tik Tok.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

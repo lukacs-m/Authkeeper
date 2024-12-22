@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Jade.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

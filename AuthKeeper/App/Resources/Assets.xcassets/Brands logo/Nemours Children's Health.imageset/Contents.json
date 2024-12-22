@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Nemours Children's Health.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

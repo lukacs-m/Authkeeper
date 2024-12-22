@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "HubSpot.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

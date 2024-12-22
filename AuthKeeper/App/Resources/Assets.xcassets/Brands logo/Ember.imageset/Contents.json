@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Ember.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

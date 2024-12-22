@@ -36,6 +36,7 @@ final class TokensListViewModel: Sendable {
 //            }
             token.token.issuer.localizedCaseInsensitiveContains(cleanSearchText)
                 || token.token.name.localizedCaseInsensitiveContains(cleanSearchText)
+                || (token.name?.localizedCaseInsensitiveContains(cleanSearchText) ?? false)
         }
     }
 
@@ -45,18 +46,16 @@ final class TokensListViewModel: Sendable {
     }
 
     func stopTimer() {
-        guard let timer else { return }
-        timer.invalidate()
-        self.timer = nil
+        timer?.invalidate()
+        timer = nil
     }
 
     func startMainActorIsolatedTimer() {
         timer = MainActorIsolatedTimer(interval: 0.1,
                                        repeats: true,
-                                       clockType: .continuous,
-                                       block: { [weak self] _ in
-                                           self?.timeRemaining = Date().timeIntervalSince1970
-                                       })
+                                       clockType: .continuous) { [weak self] _ in
+            self?.timeRemaining = Date().timeIntervalSince1970
+        }
     }
 
     func delete(token: TokenData) {
@@ -72,7 +71,8 @@ final class TokensListViewModel: Sendable {
     func toggleFavorite(token: TokenData) {
         Task {
             do {
-//                await tokensDataService.delete(token: token)
+                let newTokensData = token.copy(isFavorite: !token.isFavorite)
+                try await tokensDataService.update(token: newTokensData)
             } catch {
                 print(error)
             }

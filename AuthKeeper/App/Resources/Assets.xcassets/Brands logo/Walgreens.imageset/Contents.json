@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Walgreens.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

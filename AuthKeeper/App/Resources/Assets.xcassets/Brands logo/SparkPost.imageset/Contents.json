@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "SparkPost.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

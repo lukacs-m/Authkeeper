@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Let's Cloud.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

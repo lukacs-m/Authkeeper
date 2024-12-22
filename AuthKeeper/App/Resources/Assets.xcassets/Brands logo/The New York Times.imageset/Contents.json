@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "The New York Times.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "originHash" : "30c236f2e51b5ce2c749cf5e819f8a855ca20ef7e6b561b9787a6301446b791d",
+  "originHash" : "ee0762319c8e4a57daee1f5799190bd01c87b8aa2befd639471f2016ae1a15af",
   "pins" : [
     {
       "identity" : "docscanner",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "fb04a8918848e413d3921d346a23bae7f81088d9",
         "version" : "2.4.3"
+      }
+    },
+    {
+      "identity" : "modifiedcopymacro",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/WilhelmOks/ModifiedCopyMacro.git",
+      "state" : {
+        "revision" : "f50863ef577ca3667aef00fc4b1cc01097d63d9d",
+        "version" : "2.1.1"
       }
     },
     {
@@ -53,6 +62,15 @@
       "state" : {
         "branch" : "main",
         "revision" : "ef2acb4054bdfd982ceb1b74e1752b01cf066332"
+      }
+    },
+    {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-syntax.git",
+      "state" : {
+        "revision" : "64889f0c732f210a935a0ad7cda38f77f876262d",
+        "version" : "509.1.1"
       }
     }
   ],

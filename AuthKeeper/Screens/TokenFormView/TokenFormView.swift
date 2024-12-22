@@ -77,9 +77,11 @@ struct TokenFormView: View {
                                         .tag(algo)
                                 }
                             }
-                            Stepper("Refresh time: **\(Int(viewModel.period))s**", value: $viewModel.period,
+                            Stepper("Refresh time: **\(Int(viewModel.period))s**",
+                                    value: $viewModel.period,
                                     step: 10)
-                            Stepper("Number of digits: **\(viewModel.digits)**", value: $viewModel.digits,
+                            Stepper("Number of digits: **\(viewModel.digits)**",
+                                    value: $viewModel.digits,
                                     in: 5...9)
                         case .hotp:
                             HStack {
@@ -89,7 +91,7 @@ struct TokenFormView: View {
                                     .keyboardType(.decimalPad)
                                 #endif
                             }
-                            Stepper("Number of digits: \(viewModel.digits)", value: $viewModel.digits, in: 5...8)
+                            Stepper("Number of digits: \(viewModel.digits)", value: $viewModel.digits, in: 5...9)
                         }
                     } header: {
                         Text("Advanced token settings")

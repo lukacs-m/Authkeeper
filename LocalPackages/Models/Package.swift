@@ -13,7 +13,8 @@ let package = Package(
             targets: ["Models"])
     ],
     dependencies: [
-        .package(url: "https://github.com/lukacs-m/OneTimePassword", branch: "develop")
+        .package(url: "https://github.com/lukacs-m/OneTimePassword", branch: "develop"),
+        .package(url: "https://github.com/WilhelmOks/ModifiedCopyMacro", .upToNextMajor(from: "2.1.0"))
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -21,6 +22,7 @@ let package = Package(
         .target(
             name: "Models",
             dependencies: [
+                .product(name: "ModifiedCopy", package: "ModifiedCopyMacro"),
                 .product(name: "OneTimePassword", package: "OneTimePassword")
             ]
         ),

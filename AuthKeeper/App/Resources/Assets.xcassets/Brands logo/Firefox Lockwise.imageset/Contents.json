@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Firefox Lockwise.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

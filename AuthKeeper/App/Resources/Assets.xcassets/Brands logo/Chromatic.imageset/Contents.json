@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Chromatic.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

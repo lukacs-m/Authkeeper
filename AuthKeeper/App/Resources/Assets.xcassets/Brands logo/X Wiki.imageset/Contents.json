@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "X Wiki.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

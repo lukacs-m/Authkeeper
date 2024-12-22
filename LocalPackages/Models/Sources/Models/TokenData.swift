@@ -3,42 +3,8 @@
 
 import CryptoKit
 import Foundation
+import ModifiedCopy
 import OneTimePassword
-
-// extension Token: @retroactive Hashable {
-//    public func hash(into hasher: inout Hasher) {
-//        hasher.combine(id)
-//        hasher.combine(name)
-//        hasher.combine(issuer)
-//        hasher.combine(generator)
-//    }
-// }
-//
-// extension Generator: @retroactive Hashable {
-//    public func hash(into hasher: inout Hasher) {
-//        hasher.combine(factor)
-//        hasher.combine(secret)
-//        hasher.combine(algorithm)
-//        hasher.combine(digits)
-//    }
-// }
-//
-// extension Generator.Factor: @retroactive Hashable {
-//    public func hash(into hasher: inout Hasher) {
-//        switch self {
-//        case let .counter(value):
-//            hasher
-//                .combine(value) // combine with associated value, if it's not `Hashable` map it to some
-//                `Hashable`
-//        // type and then combine result
-//        case let .timer(value):
-//            hasher
-//                .combine(value) // combine with associated value, if it's not `Hashable` map it to some
-//                `Hashable`
-//            // type and then combine result
-//        }
-//    }
-// }
 
 public enum OTPType: String, CaseIterable, Codable, Identifiable {
     case totp
@@ -47,15 +13,16 @@ public enum OTPType: String, CaseIterable, Codable, Identifiable {
     public var id: Self { self }
 }
 
-public struct TokenData: Identifiable, Sendable, Hashable {
+@Copyable
+public struct TokenData: Identifiable, Sendable, Hashable, Equatable {
     public let id: String
     public let name: String?
     public let iconUrl: String?
     public let token: Token
+    public let folderId: String?
     public let isFavorite: Bool
     public let widgetActivated: Bool
     public let complementaryInfos: String?
-    public let folderId: String?
 
     public init(id: String = UUID().uuidString,
                 name: String? = nil,
@@ -84,12 +51,22 @@ public struct TokenData: Identifiable, Sendable, Hashable {
         token.currentPassword
     }
 
+    public var nextTotp: String? {
+        let periode = token.generator.factor.period ?? 0
+        return try? token.generator.password(at: .now + periode)
+    }
+
     public var type: OTPType {
         if case .timer = token.generator.factor {
             .totp
         } else {
             .hotp
         }
+    }
+
+    public var periode: TimeInterval {
+        guard let period = token.generator.factor.period else { return 0 }
+        return period
     }
 
     public func updatedToken() -> TokenData {

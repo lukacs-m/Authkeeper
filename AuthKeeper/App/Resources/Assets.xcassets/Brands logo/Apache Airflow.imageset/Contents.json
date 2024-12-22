@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Apache Airflow.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

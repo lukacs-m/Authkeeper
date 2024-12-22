@@ -10,63 +10,94 @@ import Models
 import SwiftUI
 
 struct TOTPCellView: View {
-    @State private var viewModel: TOTPCellViewModel
+    @State private var viewModel = TOTPCellViewModel()
     @Binding private var timeRemaining: TimeInterval
+    @Namespace private var totpAnimation
+    @Namespace private var totpCode
 
     init(item: TokenData, timeInterval: Binding<TimeInterval>) {
-        _viewModel = .init(wrappedValue: TOTPCellViewModel(item: item))
+//        _viewModel = .init(wrappedValue: TOTPCellViewModel(item: item))
         _timeRemaining = timeInterval
+        viewModel.update(item: item)
     }
 
     var body: some View {
         VStack {
-            ZStack(alignment: .trailing) {
-                if let title = viewModel.item.name {
-                    Text(title)
+            if let item = viewModel.item {
+                ZStack {
+                    Text(item.name ?? item.token.issuer)
                         .font(.system(.title2, design: .rounded))
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity, alignment: .center)
+                    HStack {
+                        Spacer()
+                        if item.isFavorite {
+                            Image(systemName: "star.fill")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .foregroundStyle(.yellow)
+                        }
+
+                        if viewModel.appConfigurationService.hideTokens {
+                            Button { viewModel.toggleTokenDisplay() } label: {
+                                Image(systemName: "eye")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundStyle(.main)
+                            }
+                        }
+                    }
                 }
-                if viewModel.item.isFavorite {
-                    Image(systemName: "start")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .foregroundStyle(.yellow)
-                        .padding(.trailing, 10)
-                }
-            }
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("\(viewModel.item.token.issuer)")
-                        .font(.system(.headline, design: .rounded))
-                        .foregroundStyle(.secondaryText)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    if !viewModel.item.token.name.isEmpty {
-                        Text("\(viewModel.item.token.name)")
+
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("\(item.token.issuer)")
                             .font(.system(.headline, design: .rounded))
                             .foregroundStyle(.secondaryText)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                        if !item.token.name.isEmpty {
+                            Text("\(item.token.name)")
+                                .font(.system(.headline, design: .rounded))
+                                .foregroundStyle(.secondaryText)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                     }
-                }
-                .foregroundStyle(.primaryText)
-                .frame(maxWidth: .infinity)
-                ZStack {
-                    HStack {
-                        Divider()
-                            .overlay(Color.primaryText)
-                    }
-                    CircularProgressView(progress: viewModel.progress,
-                                         countdown: Int(viewModel.remainingTime),
-                                         size: 35,
-                                         lineWidth: 2)
-                        .padding(.vertical, 3)
-                        .background(Color.background)
-                }
-                Text(viewModel.code)
-                    .font(.system(.title, design: .rounded))
-                    .bold()
-                    .frame(maxWidth: .infinity, alignment: .trailing)
                     .foregroundStyle(.primaryText)
+                    .frame(maxWidth: .infinity)
+                    ZStack {
+                        HStack {
+                            Divider()
+                                .overlay(Color.primaryText)
+                        }
+                        CircularProgressView(progress: viewModel.progress,
+                                             countdown: Int(viewModel.remainingTime),
+                                             size: 35,
+                                             lineWidth: 2)
+                            .padding(.vertical, 3)
+                            .background(Color.background)
+                    }
+
+                    VStack {
+                        Text(viewModel.displayTokenState ? viewModel.code : String(repeating: "●",
+                                                                                   count: viewModel.code.count))
+                            .font(.system(viewModel.displayTokenState ? .largeTitle : .title3, design: .rounded)
+                                .bold())
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .foregroundStyle(.primaryText)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.6)
+
+                        Text(viewModel.displayTokenState ? item
+                            .nextTotp ?? "" : String(repeating: "●", count: viewModel.item?.nextTotp?.count ?? 0))
+                            .font(.system(.caption, design: .rounded))
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .foregroundStyle(.secondaryText)
+                            .opacity(viewModel.appConfigurationService.showNextTokens && viewModel
+                                .countdown < 15 ? 1 : 0)
+                    }
+                    .animation(.default, value: viewModel.code)
+                }
             }
         }
         .onChange(of: timeRemaining) {
@@ -82,9 +113,26 @@ final class TOTPCellViewModel {
     var remainingTime: TimeInterval = 0
     var progress: Double = 1.0
     var countdown: Int = 0 // Delayed countdown
-    let item: TokenData
+    private(set) var item: TokenData?
 
-    init(item: TokenData) {
+    private(set) var showToken = false
+
+    @ObservationIgnored
+    @LazyInjected(\ServiceContainer.appConfigurationService) private(set) var appConfigurationService
+
+    var displayTokenState: Bool {
+        (showToken && appConfigurationService.hideTokens) || !appConfigurationService.hideTokens
+    }
+
+//    init(item: TokenData) {
+//        self.item = item
+//
+//        code = item.totp ?? ""
+//        updateTOTP()
+//    }
+    init() {}
+
+    func update(item: TokenData) {
         self.item = item
 
         code = item.totp ?? ""
@@ -92,14 +140,15 @@ final class TOTPCellViewModel {
     }
 
     func updateTOTP() {
+        guard let item else { return }
         if item.type == .totp {
             let remaining = item.remainingTime
-            remainingTime = remaining > 0 ? remaining : 30
-            if remainingTime >= 29 {
+            remainingTime = remaining > 0 ? remaining : item.periode
+            if remainingTime >= item.periode - 1 {
                 // Code has expired, generate a new one
                 code = item.totp ?? "Error"
             }
-            progress = remainingTime / 30
+            progress = remainingTime / item.periode
             // Delayed countdown logic
             countdown = Int(remainingTime)
         } else if item.totp != code {
@@ -107,5 +156,9 @@ final class TOTPCellViewModel {
             code = item.totp ?? "Error"
             print("woot new code id: \(item.id), code: \(code)")
         }
+    }
+
+    func toggleTokenDisplay() {
+        showToken.toggle()
     }
 }

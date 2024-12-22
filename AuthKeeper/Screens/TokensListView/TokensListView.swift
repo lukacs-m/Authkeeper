@@ -16,7 +16,7 @@ struct TokensListView: View {
 
     var body: some View {
         List {
-            ForEach(viewModel.getTokens()) { token in
+            ForEach(viewModel.getTokens(), id: \.self) { token in
                 row(token: token)
                     .neumorphic()
                     .listRowBackground(Color.background)
@@ -62,6 +62,7 @@ struct TokensListView: View {
         .scrollContentBackground(.hidden)
         .background(Color.background.edgesIgnoringSafeArea(.all))
         .animation(.default, value: viewModel.getTokens())
+        .animation(.default, value: viewModel.searchText)
         .onAppear {
             viewModel.startTimer()
         }

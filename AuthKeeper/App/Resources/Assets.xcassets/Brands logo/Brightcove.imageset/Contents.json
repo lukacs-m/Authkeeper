@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Brightcove.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -19,11 +19,46 @@ struct HOTPCellView: View {
     var body: some View {
         VStack {
             if let item = viewModel.item {
-                if let title = item.name {
-                    Text(title)
+                ZStack(alignment: .trailing) {
+                    Text(item.name ?? item.token.issuer)
                         .font(.system(.title2, design: .rounded))
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity, alignment: .center)
+                    HStack {
+                        Button {
+                            viewModel.updateHotpToken()
+                        } label: {
+                            Image(systemName: "arrow.trianglehead.counterclockwise.rotate.90")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .foregroundStyle(Color.main)
+                        }
+                        .buttonStyle(.plain)
+                        .font(.caption)
+                        .symbolEffect(.rotate.counterClockwise.wholeSymbol,
+                                      options: .speed(3).nonRepeating,
+                                      value: viewModel.animate)
+                        .padding(.vertical, 3)
+                        .background(Color.background)
+                        Spacer()
+                        if item.isFavorite {
+                            Image(systemName: "star.fill")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .foregroundStyle(.yellow)
+                        }
+
+                        if viewModel.appConfigurationService.hideTokens {
+                            Button { viewModel.toggleTokenDisplay() } label: {
+                                Image(systemName: "eye")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundStyle(.main)
+                            }
+                        }
+                    }
                 }
                 HStack {
                     VStack(alignment: .leading) {
@@ -40,33 +75,19 @@ struct HOTPCellView: View {
                     }
                     .foregroundStyle(.primaryText)
                     .frame(maxWidth: .infinity)
-                    ZStack {
-                        HStack {
-                            Divider()
-                                .overlay(Color.secondaryText)
-                        }
-                        Button {
-                            viewModel.updateHotpToken()
-                        } label: {
-                            Image(systemName: "arrow.trianglehead.counterclockwise.rotate.90")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 35, height: 35)
-                                .foregroundStyle(Color.main)
-                        }
-                        .buttonStyle(.plain)
-                        .font(.caption)
-                        .symbolEffect(.rotate.counterClockwise.wholeSymbol,
-                                      options: .speed(3).nonRepeating,
-                                      value: viewModel.animate)
-                        .padding(.vertical, 3)
-                        .background(Color.background)
+                    HStack {
+                        Divider()
+                            .overlay(Color.secondaryText)
                     }
-                    Text(item.totp ?? "")
-                        .font(.system(.title, design: .rounded))
-                        .bold()
+
+                    Text(viewModel.displayTokenState ? item.totp ?? "" : String(repeating: "●",
+                                                                                count: item.totp?.count ?? 0))
+                        .font(.system(viewModel.displayTokenState ? .largeTitle : .title3, design: .rounded)
+                            .bold())
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .foregroundStyle(.primaryText)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.6)
                 }
             }
         }
@@ -77,13 +98,21 @@ struct HOTPCellView: View {
 @Observable
 final class HOTPCellViewModel {
     private(set) var animate = false
+    private(set) var showToken = false
 
-    private let itemId: String
     @ObservationIgnored
     @LazyInjected(\ServiceContainer.tokensDataService) private var tokensDataService
+    @ObservationIgnored
+    @LazyInjected(\ServiceContainer.appConfigurationService) var appConfigurationService
+
+    private let itemId: String
 
     var item: TokenData? {
         tokensDataService.token(for: itemId)
+    }
+
+    var displayTokenState: Bool {
+        (showToken && appConfigurationService.hideTokens) || !appConfigurationService.hideTokens
     }
 
     init(itemId: String) {
@@ -100,5 +129,9 @@ final class HOTPCellViewModel {
                 print(error)
             }
         }
+    }
+
+    func toggleTokenDisplay() {
+        showToken.toggle()
     }
 }

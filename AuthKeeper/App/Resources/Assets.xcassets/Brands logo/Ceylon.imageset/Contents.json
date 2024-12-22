@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Ceylon.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

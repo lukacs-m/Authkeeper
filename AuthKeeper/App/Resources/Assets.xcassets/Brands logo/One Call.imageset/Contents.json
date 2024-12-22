@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "One Call.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

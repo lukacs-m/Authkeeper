@@ -40,7 +40,7 @@ struct RootView: View {
                     #if os(iOS)
                     ToolbarItem(placement: .topBarTrailing) {
                         Menu {
-                            Button {} label: {
+                            Button { router.presentedSheet = .barcodeScanner } label: {
                                 Label("Scan QR", systemImage: "qrcode.viewfinder")
                             }
                             Button { router.presentedSheet = .createEditToken(nil) } label: {
