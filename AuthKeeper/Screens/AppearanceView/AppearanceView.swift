@@ -44,9 +44,10 @@ struct AppearanceView: View {
         }
         .navigationTitle("Appearance")
         .background(Color.background)
-        .toolbarBackground(Color.background,
-                           for: .navigationBar)
-        .preferredColorScheme(viewModel.appConfigurationService.colorScheme.preferredColorScheme)
+        #if os(iOS)
+            .toolbarBackground(Color.background, for: .navigationBar)
+        #endif
+            .preferredColorScheme(viewModel.appConfigurationService.colorScheme.preferredColorScheme)
     }
 }
 

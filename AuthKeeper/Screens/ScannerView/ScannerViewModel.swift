@@ -7,6 +7,7 @@
 //
 //
 
+#if os(iOS)
 import DataLayer
 import DocScanner
 import Factory
@@ -49,3 +50,4 @@ final class ScannerViewModel: Sendable {
 private extension ScannerViewModel {
     func setUp() {}
 }
+#endif

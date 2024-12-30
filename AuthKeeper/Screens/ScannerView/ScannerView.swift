@@ -7,6 +7,8 @@
 //
 //
 
+#if os(iOS)
+
 import DocScanner
 import SwiftUI
 
@@ -35,3 +37,4 @@ struct ScannerView: View {
 #Preview {
     ScannerView()
 }
+#endif

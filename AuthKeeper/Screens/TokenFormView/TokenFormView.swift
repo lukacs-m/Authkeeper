@@ -120,10 +120,12 @@ struct TokenFormView: View {
                 }
                 #endif
             }
+            #if os(iOS)
             .toolbarBackground(Color.background,
                                for: .navigationBar)
-            .animation(.default, value: showAdvanceOptions)
-            .animation(.default, value: viewModel.canSave)
+            #endif
+                .animation(.default, value: showAdvanceOptions)
+                .animation(.default, value: viewModel.canSave)
         }
     }
 }

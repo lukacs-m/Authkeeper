@@ -95,7 +95,10 @@ public extension View {
             case .settings:
                 SettingsView()
             case .barcodeScanner:
+                #if os(iOS)
+
                 ScannerView()
+                #endif
             }
         }
     }

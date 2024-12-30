@@ -8,7 +8,8 @@
 import Models
 import OneTimePassword
 import SwiftUI
-import UIKit
+
+// import UIKit
 
 public enum ColorSchemeOption: String, RawRepresentable {
     case system
@@ -25,18 +26,52 @@ public enum ColorSchemeOption: String, RawRepresentable {
             .dark
         }
     }
-
-    var interfaceStyle: UIUserInterfaceStyle {
-        switch self {
-        case .system:
-            .unspecified
-        case .light:
-            .light
-        case .dark:
-            .dark
-        }
-    }
+//
+//    var interfaceStyle: UIUserInterfaceStyle {
+//        switch self {
+//        case .system:
+//            .unspecified
+//        case .light:
+//            .light
+//        case .dark:
+//            .dark
+//        }
+//    }
 }
+
+// enum AppearanceType: Codable, CaseIterable, Identifiable {
+//    case automatic
+//    case dark
+//    case light
+//
+//    var id: Self {
+//        return self
+//    }
+//
+//    var label: String {
+//        switch self {
+//        case .automatic:
+//            "Automatic"
+//        case .dark:
+//            "Dark"
+//        case .light:
+//            "Light"
+//        }
+//    }
+// }
+//
+// extension AppearanceType {
+//    var colorScheme: ColorScheme? {
+//        switch self {
+//        case .automatic:
+//            nil
+//        case .dark:
+//            .dark
+//        case .light:
+//            .light
+//        }
+//    }
+// }
 
 @MainActor
 public protocol AppConfigurationServicing: Sendable, Observable {

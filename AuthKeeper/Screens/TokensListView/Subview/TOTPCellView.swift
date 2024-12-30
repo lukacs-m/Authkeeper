@@ -24,11 +24,24 @@ struct TOTPCellView: View {
     var body: some View {
         VStack {
             if let item = viewModel.item {
+                let name = item.name ?? item.token.issuer
                 ZStack {
-                    Text(item.name ?? item.token.issuer)
-                        .font(.system(.title2, design: .rounded))
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity, alignment: .center)
+                    HStack {
+                        Spacer()
+//                        #if os(iOS)
+//
+//                        if let image = UIImage(named: item.token.issuer) {
+//                            Image(uiImage: image)
+//                                .resizable()
+//                                .scaledToFit()
+//                                .frame(width: 30, height: 30)
+//                        }
+//                        #endif
+                        Text(name)
+                            .font(.system(.title2, design: .rounded))
+                            .fontWeight(.semibold)
+                        Spacer()
+                    }
                     HStack {
                         Spacer()
                         if item.isFavorite {
@@ -40,7 +53,7 @@ struct TOTPCellView: View {
 
                         if viewModel.appConfigurationService.hideTokens {
                             Button { viewModel.toggleTokenDisplay() } label: {
-                                Image(systemName: "eye")
+                                Image(systemName: viewModel.showToken ? "eye.slash" : "eye")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)
@@ -114,7 +127,6 @@ final class TOTPCellViewModel {
     var progress: Double = 1.0
     var countdown: Int = 0 // Delayed countdown
     private(set) var item: TokenData?
-
     private(set) var showToken = false
 
     @ObservationIgnored
