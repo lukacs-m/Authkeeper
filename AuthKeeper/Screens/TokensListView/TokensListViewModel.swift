@@ -33,6 +33,8 @@ final class TokensListViewModel: Sendable {
 
     private var cancellables = Set<AnyCancellable>()
 
+    private(set) var sectionsDisplayState = [String: Bool]()
+
     init() {
         setUp()
     }
@@ -131,6 +133,21 @@ final class TokensListViewModel: Sendable {
 //        let pasteboard = UIPasteboard.general
 //        pasteboard.string = code
     }
+
+    func toggleSectionDisplay(for sectionId: String) {
+        if let currentState = sectionsDisplayState[sectionId] {
+            sectionsDisplayState[sectionId] = !currentState
+        } else {
+            sectionsDisplayState[sectionId] = false
+        }
+    }
+
+    func displayingSection(for sectionId: String) -> Bool {
+        guard let currentState = sectionsDisplayState[sectionId] else {
+            return true
+        }
+        return currentState
+    }
 }
 
 private extension TokensListViewModel {
@@ -146,39 +163,39 @@ private extension TokensListViewModel {
 //            .store(in: &cancellables)
     }
 
-    // TODO: fitler token in folder favorites and
-    nonisolated func filterToken(tokens: [TokenData]) async {
-//        let tokens = await tokensDataService.tokens
-        var favorites = [TokenData]()
-        var others = [TokenData]()
-        for token in tokens {
-            if token.isFavorite {
-                favorites.append(token)
-            } else {
-                others.append(token)
-            }
-        }
-
-        await MainActor.run {
-            self.favorites = favorites
-            self.otherTokens = others
-        }
-    }
-
-    func getTokens(tokens: [TokenData]) -> [TokenData] {
-        guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            return tokensDataService.tokens
-        }
-        let cleanSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        return tokensDataService.tokens.filter { token in
-//            guard searchScope == .all || conversation.isFavorite else {
-//                return false
+//    // TODO: fitler token in folder favorites and
+//    nonisolated func filterToken(tokens: [TokenData]) async {
+    ////        let tokens = await tokensDataService.tokens
+//        var favorites = [TokenData]()
+//        var others = [TokenData]()
+//        for token in tokens {
+//            if token.isFavorite {
+//                favorites.append(token)
+//            } else {
+//                others.append(token)
 //            }
-            token.token.issuer.localizedCaseInsensitiveContains(cleanSearchText)
-                || token.token.name.localizedCaseInsensitiveContains(cleanSearchText)
-                || (token.name?.localizedCaseInsensitiveContains(cleanSearchText) ?? false)
-        }
-    }
+//        }
+//
+//        await MainActor.run {
+//            self.favorites = favorites
+//            self.otherTokens = others
+//        }
+//    }
+//
+//    func getTokens(tokens: [TokenData]) -> [TokenData] {
+//        guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+//            return tokensDataService.tokens
+//        }
+//        let cleanSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+//        return tokensDataService.tokens.filter { token in
+    ////            guard searchScope == .all || conversation.isFavorite else {
+    ////                return false
+    ////            }
+//            token.token.issuer.localizedCaseInsensitiveContains(cleanSearchText)
+//                || token.token.name.localizedCaseInsensitiveContains(cleanSearchText)
+//                || (token.name?.localizedCaseInsensitiveContains(cleanSearchText) ?? false)
+//        }
+//    }
 }
 
 enum TokensListType: Equatable, Hashable {

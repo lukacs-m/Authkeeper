@@ -25,4 +25,8 @@ extension ServiceContainer {
     var appConfigurationService: Factory<any AppConfigurationServicing> {
         self { @MainActor in AppConfigurationService() }
     }
+
+    var timerService: Factory<any TimerServicing> {
+        self { TimerService() }
+    }
 }

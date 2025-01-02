@@ -114,10 +114,23 @@ struct TOTPCellView: View {
             }
         }
         .onChange(of: timeRemaining) {
+//            guard update else {
+//                return
+//            }
             viewModel.updateTOTP()
         }
+//        .onAppear {
+//            print(viewModel.item?.name ?? "")
+//            viewModel.update = true
+//        }
+//        .onDisappear {
+//            print(viewModel.item?.name ?? "", "---")
+//            viewModel.update = false
+//        }
     }
 }
+
+import Combine
 
 @MainActor
 @Observable
@@ -128,9 +141,15 @@ final class TOTPCellViewModel {
     var countdown: Int = 0 // Delayed countdown
     private(set) var item: TokenData?
     private(set) var showToken = false
+    @ObservationIgnored
+    var update = false
+    private var cancellable: AnyCancellable?
 
     @ObservationIgnored
     @LazyInjected(\ServiceContainer.appConfigurationService) private(set) var appConfigurationService
+
+    @ObservationIgnored
+    @LazyInjected(\ServiceContainer.timerService) private(set) var timerService
 
     var displayTokenState: Bool {
         (showToken && appConfigurationService.hideTokens) || !appConfigurationService.hideTokens
@@ -142,7 +161,14 @@ final class TOTPCellViewModel {
 //        code = item.totp ?? ""
 //        updateTOTP()
 //    }
-    init() {}
+    init() {
+//        cancellable = timerService.timer
+//            .receive(on: DispatchQueue.main)
+//            .sink { [weak self] _ in
+//                guard let self, update else { return }
+//                updateTOTP()
+//            }
+    }
 
     func update(item: TokenData) {
         self.item = item

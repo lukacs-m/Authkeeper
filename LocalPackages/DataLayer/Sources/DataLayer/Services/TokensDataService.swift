@@ -82,7 +82,7 @@ public extension TokensDataService {
     }
 }
 
-public struct TokenSection: Identifiable, Sendable, Equatable {
+public struct TokenSection: Identifiable, Sendable, Equatable, Hashable {
     public let id: String
     public let title: String
     public let tokens: [TokenData]
