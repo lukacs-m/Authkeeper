@@ -17,6 +17,7 @@ public protocol TokensDataServicing: Sendable, Observable {
     func delete(token: TokenData) async throws
     func update(token: TokenData) async throws
     func token(for tokenId: String) -> TokenData?
+    func addOrUpdate(tokens: [TokenData]) async throws
 
     func generateAndAddToken(from payload: String) async throws
 }
@@ -80,17 +81,25 @@ public extension TokensDataService {
         let tokenData = TokenData(token: token)
         try await addToken(token: tokenData)
     }
+
+    func addOrUpdate(tokens: [TokenData]) async throws {
+        self.tokens = try await tokenRepository.save(tokens)
+    }
 }
 
 public struct TokenSection: Identifiable, Sendable, Equatable, Hashable {
     public let id: String
     public let title: String
+    public let isFavorites: Bool
+    public let tags: Set<String>
     public let tokens: [TokenData]
 
-    public init(id: String, title: String, tokens: [TokenData]) {
+    public init(id: String, title: String, isFavorites: Bool, tags: Set<String>, tokens: [TokenData]) {
         self.id = id
         self.title = title
+        self.isFavorites = isFavorites
         self.tokens = tokens
+        self.tags = tags
     }
 
     public var itemCount: Int { tokens.count }
@@ -193,6 +202,8 @@ public final class TokensDataService: TokensDataServicing {
         if !sortedFavorites.isEmpty {
             sections.append(TokenSection(id: "favorites",
                                          title: "Favorites",
+                                         isFavorites: true,
+                                         tags: sortedFavorites.getTags,
                                          tokens: sortedFavorites))
         }
 
@@ -201,7 +212,11 @@ public final class TokensDataService: TokensDataServicing {
             if let tokensInFolder = folderMapping[folderId] {
                 let sortedFolderTokens = sortTokensByName(tokensInFolder, order: currentSortOrder)
                 let displayTitle = (folderId == "no_folder") ? "Unassigned" : folderId
-                sections.append(TokenSection(id: folderId, title: displayTitle, tokens: sortedFolderTokens))
+                sections.append(TokenSection(id: folderId,
+                                             title: displayTitle,
+                                             isFavorites: false,
+                                             tags: sortedFolderTokens.getTags,
+                                             tokens: sortedFolderTokens))
             }
         }
 
@@ -261,7 +276,8 @@ public extension TokensDataService {
         let possibleBaseNames = ["john", "jane", "alex", "chris", "maria", "user123"]
         let possibleFolders: [String?] = ["Finance", "Social", "Work", "Personal", nil]
 
-        for i in 1...3_000 {
+        var newTokens: [TokenData] = []
+        for i in 1...1_000 {
             // Randomly pick an issuer
             let issuer = possibleIssuers.randomElement() ?? ""
 
@@ -299,7 +315,15 @@ public extension TokensDataService {
                                       complementaryInfos: "Issuer: \(issuer)")
 
             // Save it to the repo and append to our local array
-            try await addToken(token: tokenData)
+            newTokens.append(tokenData)
         }
+
+        try await addOrUpdate(tokens: newTokens) // addToken(token: tokenData)
+    }
+}
+
+private extension [TokenData] {
+    var getTags: Set<String> {
+        Set(self.compactMap((\.tags)).flatMap(\.self))
     }
 }

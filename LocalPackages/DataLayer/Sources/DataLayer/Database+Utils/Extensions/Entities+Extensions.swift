@@ -16,7 +16,14 @@ extension TokenData {
                         folderId: folderId,
                         isFavorite: isFavorite,
                         widgetActivated: widgetActivated,
-                        complementaryInfos: complementaryInfos)
+                        complementaryInfos: complementaryInfos,
+                        tags: tags)
+    }
+}
+
+extension [TokenData] {
+    var toEntities: [TokenDataEntity] {
+        map(\.toEntity)
     }
 }
 
@@ -29,7 +36,8 @@ extension TokenDataEntity {
                   folderId: folderId,
                   isFavorite: isFavorite,
                   widgetActivated: widgetActivated,
-                  complementaryInfos: complementaryInfos)
+                  complementaryInfos: complementaryInfos,
+                  tags: tags)
     }
 }
 

@@ -15,6 +15,9 @@ struct TokenFormView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var viewModel: TokenFormViewModel
     @State private var showAdvanceOptions: Bool = false
+    @State private var showFolderCreator = false
+    @State private var showTagSheet = false
+    @State private var showTagCreator = false
 
     init(item: TokenData? = nil) {
         _viewModel = .init(wrappedValue: TokenFormViewModel(item: item))
@@ -49,6 +52,57 @@ struct TokenFormView: View {
                         .tint(.main)
                 } header: {
                     Text("Include in: ")
+                }
+
+                // Folder Picker Section
+                Section("Folder") {
+                    Picker("Select Folder", selection: $viewModel.selectedFolder) {
+                        ForEach(viewModel.allFolders, id: \.self) { folder in
+                            Text(folder).tag(folder)
+                        }
+                        Text("None").tag("")
+                    }
+                    .pickerStyle(.menu)
+
+                    Button("Create a new folder") {
+                        showFolderCreator = true
+                    }
+                }
+                .alert("Add new folder", isPresented: $showFolderCreator) {
+                    TextField("Folder Name", text: $viewModel.newFolderName)
+                    Button("Create") {
+                        viewModel.addFolder()
+                    }
+                    Button("Cancel", role: .cancel) {}
+                }
+
+                Section {
+                    if !viewModel.tags.isEmpty {
+//                        ScrollView {
+                        AnyLayout(FlowLayout(spacing: 8)) {
+                            ForEach(viewModel.tags, id: \.self) { tag in
+                                Text(tag)
+                                    .foregroundStyle(Color.textContrast)
+                                    .padding(10)
+                                    .background(Color.main)
+                                    .clipShape(RoundedRectangle(cornerRadius: 7))
+                            }
+                        }
+                        .padding(10)
+//                        }
+                    }
+                } header: {
+                    HStack {
+                        Text("Tags")
+                        Spacer()
+                        Button {
+                            showTagSheet.toggle()
+                        } label: {
+                            Image(systemName: "plus.circle")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                        }
+                    }
                 }
 
                 Toggle("Advance options", isOn: $showAdvanceOptions)
@@ -126,10 +180,110 @@ struct TokenFormView: View {
             #endif
                 .animation(.default, value: showAdvanceOptions)
                 .animation(.default, value: viewModel.canSave)
+                .sheet(isPresented: $showTagSheet) {
+                    tagsList
+                }
+        }
+    }
+
+    private var tagsList: some View {
+        NavigationStack {
+            List {
+                ForEach(viewModel.availableTags, id: \.self) { tag in
+                    Button {
+                        viewModel.toggleTag(tag: tag)
+                    } label: {
+                        HStack {
+                            Text(tag)
+                            Spacer()
+                            if viewModel.tags.contains(tag) {
+                                Image(systemName: "checkmark")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                            }
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Select Tags")
+            .navigationBarTitleDisplayMode(.inline)
+            .alert("Add new tag", isPresented: $showTagCreator) {
+                TextField("Tag Name", text: $viewModel.newTagName)
+                Button("Create") {
+                    viewModel.addTag()
+                }
+                Button("Cancel", role: .cancel) {}
+            }
+            .toolbar {
+                #if os(iOS)
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button { showTagCreator.toggle() } label: {
+                        Text("New tag")
+                            .foregroundStyle(Color.textContrast)
+                            .padding(10)
+                            .background(Color.main)
+                            .clipShape(Capsule())
+                    }
+                }
+                #endif
+            }
         }
     }
 }
 
 #Preview {
     TokenFormView()
+}
+
+struct FlowLayout: Layout {
+    var spacing: CGFloat = 8
+
+    func sizeThatFits(proposal: ProposedViewSize,
+                      subviews: Subviews,
+                      cache: inout ()) -> CGSize {
+        let containerWidth = proposal.width ?? .infinity
+        let sizes = subviews.map { $0.sizeThatFits(.unspecified) }
+        return layout(sizes: sizes,
+                      spacing: spacing,
+                      containerWidth: containerWidth).size
+    }
+
+    func placeSubviews(in bounds: CGRect,
+                       proposal: ProposedViewSize,
+                       subviews: Subviews,
+                       cache: inout ()) {
+        let sizes = subviews.map { $0.sizeThatFits(.unspecified) }
+        let offsets =
+            layout(sizes: sizes,
+                   spacing: spacing,
+                   containerWidth: bounds.width).offsets
+        for (offset, subview) in zip(offsets, subviews) {
+            subview.place(at: .init(x: offset.x + bounds.minX,
+                                    y: offset.y + bounds.minY),
+                          proposal: .unspecified)
+        }
+    }
+
+    func layout(sizes: [CGSize],
+                spacing: CGFloat = 8,
+                containerWidth: CGFloat) -> (offsets: [CGPoint], size: CGSize) {
+        var result: [CGPoint] = []
+        var currentPosition: CGPoint = .zero
+        var lineHeight: CGFloat = 0
+        var maxX: CGFloat = 0
+        for size in sizes {
+            if currentPosition.x + size.width > containerWidth {
+                currentPosition.x = 0
+                currentPosition.y += lineHeight + spacing
+                lineHeight = 0
+            }
+            result.append(currentPosition)
+            currentPosition.x += size.width
+            maxX = max(maxX, currentPosition.x)
+            currentPosition.x += spacing
+            lineHeight = max(lineHeight, size.height)
+        }
+        return (result,
+                .init(width: maxX, height: currentPosition.y + lineHeight))
+    }
 }

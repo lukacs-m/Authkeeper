@@ -21,41 +21,106 @@ import UIKit
 @Observable @MainActor
 final class TokensListViewModel: Sendable {
     var timeRemaining: TimeInterval = 0
-    var searchText = ""
+    var selectedtag = "All"
+
+    private(set) var sectionsDisplayState = [String: Bool]()
+    @ObservationIgnored var searchText = "" {
+        didSet {
+            searchTextStream.send(searchText)
+        }
+    }
 
     @ObservationIgnored
-    private var timer: MainActorIsolatedTimer?
-    @ObservationIgnored
-    @LazyInjected(\ServiceContainer.tokensDataService) private var tokensDataService
+    var visibleCellsId: [String] = []
 
     private var favorites = [TokenData]()
     private var otherTokens = [TokenData]()
-
+    @ObservationIgnored
+    private var timer: MainActorIsolatedTimer?
+    @ObservationIgnored
+    private let searchTextStream: CurrentValueSubject<String, Never> = .init("")
+    @ObservationIgnored
     private var cancellables = Set<AnyCancellable>()
+    private var lastestQuery = ""
 
-    private(set) var sectionsDisplayState = [String: Bool]()
+    @ObservationIgnored
+    @LazyInjected(\ServiceContainer.tokensDataService) private var tokensDataService
 
     init() {
         setUp()
+        searchTextStream
+            .dropFirst()
+            .removeDuplicates()
+            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] newSearch in
+                guard let self else { return }
+                lastestQuery = newSearch.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+            }
+            .store(in: &cancellables)
     }
 
     var filteredTokens: [TokenSection] {
-        guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-//            return otherTokens return tokensDataService.tokens
+        let isFilteringBySearchText = !lastestQuery.isEmpty
+        let isFilteringByTag = selectedtag != "All"
+
+        // Return unfiltered data if no filters are applied
+        guard isFilteringBySearchText || isFilteringByTag else {
             return tokensDataService.tokenSections
         }
-        let cleanSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        return tokensDataService.tokenSections.map { section in
-            let token = section.tokens.filter { token in
-                //            guard searchScope == .all || conversation.isFavorite else {
-                //                return false
-                //            }
-                token.token.issuer.localizedCaseInsensitiveContains(cleanSearchText)
-                    || token.token.name.localizedCaseInsensitiveContains(cleanSearchText)
-                    || (token.name?.localizedCaseInsensitiveContains(cleanSearchText) ?? false)
+
+        // Apply filters
+        return tokensDataService.tokenSections.compactMap { section in
+            let filteredTokens = section.tokens.filter { token in
+                let matchesSearchText = isFilteringBySearchText &&
+                    (token.token.issuer.localizedCaseInsensitiveContains(lastestQuery) ||
+                        token.token.name.localizedCaseInsensitiveContains(lastestQuery) ||
+                        (token.name?.localizedCaseInsensitiveContains(lastestQuery) ?? false))
+                var matchesTag = false
+                if isFilteringByTag, let tags = token.tags {
+                    matchesTag = tags.contains(selectedtag)
+                }
+//                 = isFilteringByTag && token.tags.contains(selectedtag)
+                return matchesSearchText || matchesTag
             }
-            return TokenSection(id: section.id, title: section.title, tokens: token)
+
+//            // Skip sections without matching tokens
+//            guard !filteredTokens.isEmpty else { return nil }
+
+            return TokenSection(id: section.id,
+                                title: section.title,
+                                isFavorites: section.isFavorites,
+                                tags: section.tags,
+                                tokens: filteredTokens)
         }
+    }
+
+//    var filteredTokens: [TokenSection] {
+//
+//        guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, selectedtag != "All" else {
+    ////            return otherTokens return tokensDataService.tokens
+//            return tokensDataService.tokenSections
+//        }
+//        let cleanSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+//        return tokensDataService.tokenSections.map { section in
+//            let token = section.tokens.filter { token in
+//                //            guard searchScope == .all || conversation.isFavorite else {
+//                //                return false
+//                //            }
+//                (token.token.issuer.localizedCaseInsensitiveContains(cleanSearchText)
+//                    || token.token.name.localizedCaseInsensitiveContains(cleanSearchText)
+//                    || (token.name?.localizedCaseInsensitiveContains(cleanSearchText) ?? false))
+//            }
+//            return TokenSection(id: section.id,
+//                                title: section.title,
+//                                isFavorites: section.isFavorites,
+//                                tags: section.tags,
+//                                tokens: token)
+//        }
+//    }
+
+    func isVisible(id: String) -> Bool {
+        visibleCellsId.contains(id)
     }
 
 //
@@ -228,5 +293,33 @@ extension String {
         #else
         UIPasteboard.general.string = self
         #endif
+    }
+}
+
+// private extension [TokenSection] {
+//    var tags: [String]? {
+//        self.compactMap { guard !$0.tags.isEmpty else { return nil}
+//            return $0.tags
+//        }
+//            .reduce(into: Set<String>()) { $0.union($1) }
+//            .sorted()
+//    }
+// }
+
+// extension Array where Element == TokenSection
+extension [TokenSection] {
+    /// Returns an optional array of strings containing unique tags from all sections.
+    /// - Returns: An array of tags with "All" as the first element, or `nil` if no tags are present.
+    var tags: [String]? {
+        // Collect all tags from the sections
+        let combinedTags = self.reduce(into: Set<String>()) { result, section in
+            result.formUnion(section.tags)
+        }
+
+        // If no tags are found, return nil
+        guard !combinedTags.isEmpty else { return nil }
+
+        // Return the tags as an array with "All" as the first element
+        return ["All"] + combinedTags.sorted()
     }
 }

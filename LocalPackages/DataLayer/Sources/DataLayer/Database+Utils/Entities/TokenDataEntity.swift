@@ -20,6 +20,7 @@ public final class TokenDataEntity: Equatable, Hashable, @unchecked Sendable {
     public private(set) var widgetActivated: Bool
     public private(set) var complementaryInfos: String?
     public private(set) var folderId: String?
+    public private(set) var tags: [String]?
 
     init(id: String,
          name: String? = nil,
@@ -28,7 +29,8 @@ public final class TokenDataEntity: Equatable, Hashable, @unchecked Sendable {
          folderId: String? = nil,
          isFavorite: Bool,
          widgetActivated: Bool,
-         complementaryInfos: String? = nil) {
+         complementaryInfos: String? = nil,
+         tags: [String]? = nil) {
         self.id = id
         self.name = name
         self.iconUrl = iconUrl
@@ -37,5 +39,6 @@ public final class TokenDataEntity: Equatable, Hashable, @unchecked Sendable {
         self.widgetActivated = widgetActivated
         self.complementaryInfos = complementaryInfos
         self.folderId = folderId
+        self.tags = tags
     }
 }

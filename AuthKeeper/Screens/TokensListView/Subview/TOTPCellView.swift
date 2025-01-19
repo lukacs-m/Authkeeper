@@ -22,12 +22,11 @@ struct TOTPCellView: View {
     }
 
     var body: some View {
-        VStack {
+        VStack(spacing: 15) {
             if let item = viewModel.item {
                 let name = item.name ?? item.token.issuer
-                ZStack {
-                    HStack {
-                        Spacer()
+                ZStack(alignment: .topTrailing) {
+                    HStack(spacing: 0) {
 //                        #if os(iOS)
 //
 //                        if let image = UIImage(named: item.token.issuer) {
@@ -38,29 +37,52 @@ struct TOTPCellView: View {
 //                        }
 //                        #endif
                         Text(name)
-                            .font(.system(.title2, design: .rounded))
+                            .font(.system(.title3, design: .rounded))
                             .fontWeight(.semibold)
-                        Spacer()
-                    }
-                    HStack {
-                        Spacer()
-                        if item.isFavorite {
-                            Image(systemName: "star.fill")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .foregroundStyle(.yellow)
-                        }
-
-                        if viewModel.appConfigurationService.hideTokens {
-                            Button { viewModel.toggleTokenDisplay() } label: {
-                                Image(systemName: viewModel.showToken ? "eye.slash" : "eye")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundStyle(.main)
+                            .minimumScaleFactor(0.9)
+                            .lineLimit(1)
+                            .layoutPriority(1)
+                        Spacer(minLength: 5)
+                        HStack {
+                            if viewModel.appConfigurationService.hideTokens {
+                                Button { viewModel.toggleTokenDisplay() } label: {
+                                    Image(systemName: viewModel.showToken ? "eye.slash" : "eye")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundStyle(.main)
+                                }
                             }
                         }
+//                        .layoutPriority(1)
                     }
+                    if item.isFavorite {
+                        Image(systemName: "star.fill")
+                            .resizable()
+                            .frame(width: 10, height: 10)
+                            .foregroundStyle(.yellow)
+                            .offset(x: 10, y: -10)
+                    }
+
+//                    HStack {
+//                        Spacer()
+//                        if item.isFavorite {
+//                            Image(systemName: "star.fill")
+//                                .resizable()
+//                                .frame(width: 20, height: 20)
+//                                .foregroundStyle(.yellow)
+//                        }
+//
+//                        if viewModel.appConfigurationService.hideTokens {
+//                            Button { viewModel.toggleTokenDisplay() } label: {
+//                                Image(systemName: viewModel.showToken ? "eye.slash" : "eye")
+//                                    .resizable()
+//                                    .scaledToFit()
+//                                    .frame(width: 20, height: 20)
+//                                    .foregroundStyle(.main)
+//                            }
+//                        }
+//                    }.layoutPriority(1)
                 }
 
                 HStack {
@@ -119,12 +141,34 @@ struct TOTPCellView: View {
 //            }
             viewModel.updateTOTP()
         }
+//        .onChange(of: viewModel.update) {
+        ////            guard update else {
+        ////                return
+        ////            }
+//            viewModel.updateTOTP()
+//        }
+        .onScrollVisibilityChange(threshold: 0.2) { visible in
+            //            print("\(viewModel.item?.name ?? "") is \(visible ? "visible" : "hidden")")
+
+            viewModel.update = visible
+            if visible {
+                viewModel.updateTOTP()
+            }
+            //            if visible {
+            //                viewModel.visibleCellsId.append(token.id)
+            //            } else {
+            //                viewModel.visibleCellsId.removeAll(where: { $0 == token.id })
+            //            }
+        }
+
 //        .onAppear {
-//            print(viewModel.item?.name ?? "")
+        ////            print(viewModel.item?.name ?? "")
 //            viewModel.update = true
+        ////            viewModel.startTimer()
 //        }
 //        .onDisappear {
-//            print(viewModel.item?.name ?? "", "---")
+        ////            print(viewModel.item?.name ?? "", "---")
+        ////            viewModel.stopTimer()
 //            viewModel.update = false
 //        }
     }
@@ -144,6 +188,7 @@ final class TOTPCellViewModel {
     @ObservationIgnored
     var update = false
     private var cancellable: AnyCancellable?
+    private var cancellables = Set<AnyCancellable>()
 
     @ObservationIgnored
     @LazyInjected(\ServiceContainer.appConfigurationService) private(set) var appConfigurationService
@@ -162,12 +207,13 @@ final class TOTPCellViewModel {
 //        updateTOTP()
 //    }
     init() {
-//        cancellable = timerService.timer
-//            .receive(on: DispatchQueue.main)
-//            .sink { [weak self] _ in
-//                guard let self, update else { return }
-//                updateTOTP()
-//            }
+        cancellable = timerService.timer
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self, update else { return }
+                updateTOTP()
+            }
+//            .store(in: &cancellables)
     }
 
     func update(item: TokenData) {
@@ -199,4 +245,20 @@ final class TOTPCellViewModel {
     func toggleTokenDisplay() {
         showToken.toggle()
     }
+
+//    func startTimer() {
+//        cancellable = timerService.timer
+//            .subscribe(on: DispatchQueue.main)
+//            .receive(on: DispatchQueue.main)
+//            .sink { [weak self] _ in
+//                guard let self else { return }
+//                print("should be updating ui of \(item?.name)")
+//                updateTOTP()
+//            }
+//    }
+//
+//    func stopTimer() {
+//        cancellable?.cancel()
+//        cancellable = nil
+//    }
 }

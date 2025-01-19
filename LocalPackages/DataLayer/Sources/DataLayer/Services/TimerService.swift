@@ -16,9 +16,9 @@ public final class TimerService: TimerServicing {
     public let timer: Timer.TimerPublisher
     private let cancellable: AnyCancellable?
 
-    public init(timer: Timer.TimerPublisher = Timer.TimerPublisher(interval: 0.1,
+    public init(timer: Timer.TimerPublisher = Timer.TimerPublisher(interval: 0.3,
                                                                    runLoop: .main,
-                                                                   mode: .default)) {
+                                                                   mode: .common)) {
         self.timer = timer
         cancellable = timer.connect() as? AnyCancellable
     }

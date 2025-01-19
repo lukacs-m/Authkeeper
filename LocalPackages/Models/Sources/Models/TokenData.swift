@@ -13,7 +13,7 @@ public enum OTPType: String, CaseIterable, Codable, Identifiable {
     public var id: Self { self }
 }
 
-@Copyable
+// @Copyable
 public struct TokenData: Identifiable, Sendable, Hashable, Equatable {
     public let id: String
     public let name: String?
@@ -23,6 +23,8 @@ public struct TokenData: Identifiable, Sendable, Hashable, Equatable {
     public let isFavorite: Bool
     public let widgetActivated: Bool
     public let complementaryInfos: String?
+    public let tags: [String]?
+    private let precomputedHash: Int
 
     public init(id: String = UUID().uuidString,
                 name: String? = nil,
@@ -31,7 +33,8 @@ public struct TokenData: Identifiable, Sendable, Hashable, Equatable {
                 folderId: String? = nil,
                 isFavorite: Bool = false,
                 widgetActivated: Bool = false,
-                complementaryInfos: String? = nil) {
+                complementaryInfos: String? = nil,
+                tags: [String]? = nil) {
         self.id = id
         self.name = name
         self.iconUrl = iconUrl
@@ -40,6 +43,15 @@ public struct TokenData: Identifiable, Sendable, Hashable, Equatable {
         self.widgetActivated = widgetActivated
         self.complementaryInfos = complementaryInfos
         self.folderId = folderId
+        self.tags = tags
+        precomputedHash = Self.computeHash(id: id,
+                                           name: name,
+                                           iconUrl: iconUrl,
+                                           folderId: folderId,
+                                           isFavorite: isFavorite,
+                                           widgetActivated: widgetActivated,
+                                           tags: tags,
+                                           complementaryInfos: complementaryInfos)
     }
 
     public var remainingTime: TimeInterval {
@@ -77,5 +89,50 @@ public struct TokenData: Identifiable, Sendable, Hashable, Equatable {
                          token: newToken,
                          isFavorite: isFavorite,
                          widgetActivated: widgetActivated)
+    }
+
+    /// Returns a copy of the caller whose value for `isFavorite` is different.
+    public func copy(isFavorite: Bool) -> Self {
+        .init(id: id,
+              name: name,
+              iconUrl: iconUrl,
+              token: token,
+              folderId: folderId,
+              isFavorite: isFavorite,
+              widgetActivated: widgetActivated,
+              complementaryInfos: complementaryInfos,
+              tags: tags)
+    }
+}
+
+// MARK: - Hashable
+
+extension TokenData {
+    // MARK: - Hashable
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(precomputedHash)
+    }
+
+    // MARK: - Static Helper for Hash Precomputation
+
+    private static func computeHash(id: String,
+                                    name: String?,
+                                    iconUrl: String?,
+                                    folderId: String?,
+                                    isFavorite: Bool,
+                                    widgetActivated: Bool,
+                                    tags: [String]?,
+                                    complementaryInfos: String?) -> Int {
+        var hasher = Hasher()
+        hasher.combine(id)
+        hasher.combine(name)
+        hasher.combine(iconUrl)
+        hasher.combine(folderId)
+        hasher.combine(isFavorite)
+        hasher.combine(widgetActivated)
+        hasher.combine(tags)
+        hasher.combine(complementaryInfos)
+        return hasher.finalize()
     }
 }

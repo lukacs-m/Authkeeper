@@ -73,7 +73,6 @@ struct SettingsView: View {
                 #endif
             }
             #if os(iOS)
-
             .toolbarBackground(Color.background,
                                for: .navigationBar)
             #endif

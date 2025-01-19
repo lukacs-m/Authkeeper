@@ -17,6 +17,8 @@ public protocol TokenServicing: Sendable {
 
     func getAllTokens() async throws -> [TokenData]
     func save(_ token: TokenData) async throws
+    func save(_ tokens: [TokenData]) async throws -> [TokenData]
+
     func remove(_ token: TokenData) async throws
     func removeAll() async throws
 }
@@ -40,6 +42,11 @@ public extension TokenRepository {
         try await update()
     }
 
+    func save(_ tokens: [TokenData]) async throws -> [TokenData] {
+        try await persistantStorage.batchSave(content: tokens.toEntities)
+        return try await update()
+    }
+
     func remove(_ token: TokenData) async throws {
         let id = token.id
         let predicate = #Predicate<TokenDataEntity> { entity in
@@ -57,8 +64,10 @@ public extension TokenRepository {
         try await update()
     }
 
-    private func update() async throws {
+    @discardableResult
+    private func update() async throws -> [TokenData] {
         let bars: [TokenData] = try await persistantStorage.fetchAll().toTokens
         tokens.send(bars)
+        return bars
     }
 }
