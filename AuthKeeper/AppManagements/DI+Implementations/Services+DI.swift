@@ -29,4 +29,8 @@ extension ServiceContainer {
     var timerService: Factory<any TimerServicing> {
         self { TimerService() }
     }
+
+    var encryptionService: Factory<any EncryptionServicing> {
+        self { EncryptionService() }
+    }
 }

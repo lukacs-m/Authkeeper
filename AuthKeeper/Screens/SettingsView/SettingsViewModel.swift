@@ -10,7 +10,7 @@
 import Foundation
 
 @Observable @MainActor
-final class SettingsViewModel: Sendable {
+final class SettingsViewModel {
     init() {
         setUp()
     }

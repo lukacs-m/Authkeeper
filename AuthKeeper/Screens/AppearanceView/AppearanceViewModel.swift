@@ -12,7 +12,7 @@ import Factory
 import Foundation
 
 @Observable @MainActor
-final class AppearanceViewModel: Sendable {
+final class AppearanceViewModel {
     @ObservationIgnored
     @LazyInjected(\ServiceContainer.appConfigurationService) var appConfigurationService
 

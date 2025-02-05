@@ -19,9 +19,9 @@ import SwiftUI
 import UIKit
 
 @Observable @MainActor
-final class TokensListViewModel: Sendable {
+final class TokensListViewModel {
     var timeRemaining: TimeInterval = 0
-    var selectedtag = "All"
+    var selectedTag: Tag = .all
 
     private(set) var sectionsDisplayState = [String: Bool]()
     @ObservationIgnored var searchText = "" {
@@ -62,7 +62,7 @@ final class TokensListViewModel: Sendable {
 
     var filteredTokens: [TokenSection] {
         let isFilteringBySearchText = !lastestQuery.isEmpty
-        let isFilteringByTag = selectedtag != "All"
+        let isFilteringByTag = selectedTag != .all
 
         // Return unfiltered data if no filters are applied
         guard isFilteringBySearchText || isFilteringByTag else {
@@ -78,7 +78,7 @@ final class TokensListViewModel: Sendable {
                         (token.name?.localizedCaseInsensitiveContains(lastestQuery) ?? false))
                 var matchesTag = false
                 if isFilteringByTag, let tags = token.tags {
-                    matchesTag = tags.contains(selectedtag)
+                    matchesTag = tags.contains(selectedTag)
                 }
 //                 = isFilteringByTag && token.tags.contains(selectedtag)
                 return matchesSearchText || matchesTag
@@ -310,9 +310,9 @@ extension String {
 extension [TokenSection] {
     /// Returns an optional array of strings containing unique tags from all sections.
     /// - Returns: An array of tags with "All" as the first element, or `nil` if no tags are present.
-    var tags: [String]? {
+    var tags: [Tag]? {
         // Collect all tags from the sections
-        let combinedTags = self.reduce(into: Set<String>()) { result, section in
+        let combinedTags = self.reduce(into: Set<Tag>()) { result, section in
             result.formUnion(section.tags)
         }
 
@@ -320,6 +320,6 @@ extension [TokenSection] {
         guard !combinedTags.isEmpty else { return nil }
 
         // Return the tags as an array with "All" as the first element
-        return ["All"] + combinedTags.sorted()
+        return [.all] + combinedTags.sorted()
     }
 }

@@ -14,14 +14,16 @@ import OneTimePassword
 
 @MainActor
 @Observable
-final class RootViewModel: Sendable {
+final class RootViewModel {
     init() {
         setUp()
     }
 }
 
 private extension RootViewModel {
-    func setUp() {}
+    func setUp() {
+        print("woot \(Bundle.main.infoDictionary!["AppIdentifierPrefix"] as? String)")
+    }
 }
 
 @globalActor

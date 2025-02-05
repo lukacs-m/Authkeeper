@@ -26,7 +26,7 @@ extension Generator.Algorithm: @retroactive CaseIterable, @retroactive Identifia
 
 @Observable
 @MainActor
-final class TokenFormViewModel: Sendable {
+final class TokenFormViewModel {
     var type: OTPType = .totp
     var issuer = ""
     var name = ""
@@ -42,8 +42,8 @@ final class TokenFormViewModel: Sendable {
 
     var selectedFolder = ""
     var allFolders: [String] = []
-    var tags: [String] = []
-    var availableTags: [String] = []
+    var tags: [Tag] = []
+    var availableTags: [Tag] = []
     var newFolderName = ""
     var newTagName = ""
 
@@ -106,14 +106,18 @@ final class TokenFormViewModel: Sendable {
     }
 
     func addTag() {
-        guard !newTagName.isEmpty,
-              !availableTags.contains(newTagName) else { return }
-        tags.append(newTagName)
-        availableTags.append(newTagName)
+        guard !newTagName.isEmpty else { return }
+
+        let newTag: Tag = .custom(newTagName)
+
+        guard !availableTags.contains(newTag) else { return }
+
+        tags.append(newTag)
+        availableTags.append(newTag)
         newTagName = ""
     }
 
-    func toggleTag(tag: String) {
+    func toggleTag(tag: Tag) {
         if tags.isEmpty {
             tags.append(tag)
             return

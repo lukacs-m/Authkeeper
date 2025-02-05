@@ -14,7 +14,7 @@ public enum OTPType: String, CaseIterable, Codable, Identifiable {
 }
 
 // @Copyable
-public struct TokenData: Identifiable, Sendable, Hashable, Equatable {
+public struct TokenData: Identifiable, Sendable, Hashable, Equatable, Codable {
     public let id: String
     public let name: String?
     public let iconUrl: String?
@@ -23,7 +23,7 @@ public struct TokenData: Identifiable, Sendable, Hashable, Equatable {
     public let isFavorite: Bool
     public let widgetActivated: Bool
     public let complementaryInfos: String?
-    public let tags: [String]?
+    public let tags: [Tag]?
     private let precomputedHash: Int
 
     public init(id: String = UUID().uuidString,
@@ -34,7 +34,7 @@ public struct TokenData: Identifiable, Sendable, Hashable, Equatable {
                 isFavorite: Bool = false,
                 widgetActivated: Bool = false,
                 complementaryInfos: String? = nil,
-                tags: [String]? = nil) {
+                tags: [Tag]? = nil) {
         self.id = id
         self.name = name
         self.iconUrl = iconUrl
@@ -122,7 +122,7 @@ extension TokenData {
                                     folderId: String?,
                                     isFavorite: Bool,
                                     widgetActivated: Bool,
-                                    tags: [String]?,
+                                    tags: [Tag]?,
                                     complementaryInfos: String?) -> Int {
         var hasher = Hasher()
         hasher.combine(id)

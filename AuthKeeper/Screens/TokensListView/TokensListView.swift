@@ -376,16 +376,16 @@ struct TokensListView: View {
             if let tags = viewModel.filteredTokens.tags {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(tags, id: \.self) { tag in
-                            Button { viewModel.selectedtag = tag } label: {
-                                Text(tag)
-                                    .foregroundStyle(viewModel.selectedtag == tag ? Color.textContrast : Color
+                        ForEach(tags) { tag in
+                            Button { viewModel.selectedTag = tag } label: {
+                                Text(tag.title)
+                                    .foregroundStyle(viewModel.selectedTag == tag ? Color.textContrast : Color
                                         .primary)
                                     .padding(.horizontal, 10)
                                     .padding(.vertical, 5)
                                     .background {
                                         RoundedRectangle(cornerRadius: 7)
-                                            .fill(viewModel.selectedtag == tag ? Color.main : Color.background)
+                                            .fill(viewModel.selectedTag == tag ? Color.main : Color.background)
                                             .stroke(Color.main, lineWidth: 2)
                                     }
 //                                    .background()

@@ -19,6 +19,7 @@ final class RepositoryContainer: SharedContainer, AutoRegistering, Sendable {
 
 extension RepositoryContainer {
     var tokenRepository: Factory<any TokenServicing> {
-        self { TokenRepository(persistantStorage: ToolsContainer.shared.persistenceService()) }
+        self { TokenRepository(persistentStorage: ToolsContainer.shared.persistenceService(),
+                               encryptionService: ServiceContainer.shared.encryptionService()) }
     }
 }

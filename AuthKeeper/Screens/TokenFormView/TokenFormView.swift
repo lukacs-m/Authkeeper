@@ -78,10 +78,9 @@ struct TokenFormView: View {
 
                 Section {
                     if !viewModel.tags.isEmpty {
-//                        ScrollView {
                         AnyLayout(FlowLayout(spacing: 8)) {
-                            ForEach(viewModel.tags, id: \.self) { tag in
-                                Text(tag)
+                            ForEach(viewModel.tags) { tag in
+                                Text(tag.title)
                                     .foregroundStyle(Color.textContrast)
                                     .padding(10)
                                     .background(Color.main)
@@ -89,7 +88,6 @@ struct TokenFormView: View {
                             }
                         }
                         .padding(10)
-//                        }
                     }
                 } header: {
                     HStack {
@@ -189,12 +187,12 @@ struct TokenFormView: View {
     private var tagsList: some View {
         NavigationStack {
             List {
-                ForEach(viewModel.availableTags, id: \.self) { tag in
+                ForEach(viewModel.availableTags) { tag in
                     Button {
                         viewModel.toggleTag(tag: tag)
                     } label: {
                         HStack {
-                            Text(tag)
+                            Text(tag.title)
                             Spacer()
                             if viewModel.tags.contains(tag) {
                                 Image(systemName: "checkmark")

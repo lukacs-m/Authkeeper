@@ -91,10 +91,10 @@ public struct TokenSection: Identifiable, Sendable, Equatable, Hashable {
     public let id: String
     public let title: String
     public let isFavorites: Bool
-    public let tags: Set<String>
+    public let tags: Set<Tag>
     public let tokens: [TokenData]
 
-    public init(id: String, title: String, isFavorites: Bool, tags: Set<String>, tokens: [TokenData]) {
+    public init(id: String, title: String, isFavorites: Bool, tags: Set<Tag>, tokens: [TokenData]) {
         self.id = id
         self.title = title
         self.isFavorites = isFavorites
@@ -323,7 +323,7 @@ public extension TokensDataService {
 }
 
 private extension [TokenData] {
-    var getTags: Set<String> {
+    var getTags: Set<Tag> {
         Set(self.compactMap((\.tags)).flatMap(\.self))
     }
 }

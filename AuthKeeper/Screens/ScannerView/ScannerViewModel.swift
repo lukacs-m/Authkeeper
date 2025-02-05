@@ -15,7 +15,7 @@ import Foundation
 import OneTimePassword
 
 @Observable @MainActor
-final class ScannerViewModel: Sendable {
+final class ScannerViewModel {
     var scanning = true
 
     @ObservationIgnored

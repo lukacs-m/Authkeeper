@@ -5,44 +5,47 @@
 //  Created by Martin Lukacs on 18/12/2024.
 //
 
+import Foundation
 import Models
 
 extension TokenData {
-    var toEntity: TokenDataEntity {
+    func toEntity(encryptedData: Data) -> TokenDataEntity {
+//        TokenDataEntity(id: id,
+//                        name: name,
+//                        iconUrl: iconUrl,
+//                        token: token,
+//                        folderId: folderId,
+//                        isFavorite: isFavorite,
+//                        widgetActivated: widgetActivated,
+//                        complementaryInfos: complementaryInfos,
+//                        tags: tags)
         TokenDataEntity(id: id,
-                        name: name,
-                        iconUrl: iconUrl,
-                        token: token,
-                        folderId: folderId,
-                        isFavorite: isFavorite,
-                        widgetActivated: widgetActivated,
-                        complementaryInfos: complementaryInfos,
-                        tags: tags)
+                        encryptedData: encryptedData)
     }
 }
 
-extension [TokenData] {
-    var toEntities: [TokenDataEntity] {
-        map(\.toEntity)
-    }
-}
+// extension [TokenData] {
+//    func toEntities: [TokenDataEntity] {
+//        map(\.toEntity)
+//    }
+// }
 
-extension TokenDataEntity {
-    var toToken: TokenData {
-        TokenData(id: id,
-                  name: name,
-                  iconUrl: iconUrl,
-                  token: token,
-                  folderId: folderId,
-                  isFavorite: isFavorite,
-                  widgetActivated: widgetActivated,
-                  complementaryInfos: complementaryInfos,
-                  tags: tags)
-    }
-}
-
-extension [TokenDataEntity] {
-    var toTokens: [TokenData] {
-        map(\.toToken)
-    }
-}
+// extension TokenDataEntity {
+//    var toToken: TokenData {
+//        TokenData(id: id,
+//                  name: name,
+//                  iconUrl: iconUrl,
+//                  token: token,
+//                  folderId: folderId,
+//                  isFavorite: isFavorite,
+//                  widgetActivated: widgetActivated,
+//                  complementaryInfos: complementaryInfos,
+//                  tags: tags)
+//    }
+// }
+//
+// extension [TokenDataEntity] {
+//    var toTokens: [TokenData] {
+//        map(\.toToken)
+//    }
+// }

@@ -24,26 +24,45 @@ public protocol TokenServicing: Sendable {
 }
 
 public final class TokenRepository: TokenServicing {
-    private let persistantStorage: any PersistenceServicing
+    private let persistentStorage: any PersistenceServicing
+    private let encryptionService: any EncryptionServicing
+    private let decoder = JSONDecoder()
+    private let encoder = JSONEncoder()
     public let tokens: CurrentValueSubject<[TokenData], Never> = .init([])
 
-    public init(persistantStorage: any PersistenceServicing) {
-        self.persistantStorage = persistantStorage
+    public init(persistentStorage: any PersistenceServicing,
+                encryptionService: any EncryptionServicing) {
+        self.persistentStorage = persistentStorage
+        self.encryptionService = encryptionService
     }
 }
 
 public extension TokenRepository {
     func getAllTokens() async throws -> [TokenData] {
-        try await persistantStorage.fetchAll().toTokens
+        let encryptedTokens: [TokenDataEntity] = try await persistentStorage.fetchAll()
+        return encryptedTokens.compactMap { encryptedEntity in
+            guard let decryptedData: Data = try? encryptionService.decrypt(encryptedEntity.encryptedData) else {
+                return nil
+            }
+            return try? decoder.decode(TokenData.self, from: decryptedData)
+        }
     }
 
     func save(_ token: TokenData) async throws {
-        try await persistantStorage.save(data: token.toEntity)
+        let entity = try createEntity(token)
+        try await persistentStorage.save(data: entity)
         try await update()
     }
 
     func save(_ tokens: [TokenData]) async throws -> [TokenData] {
-        try await persistantStorage.batchSave(content: tokens.toEntities)
+        let entities: [TokenDataEntity] = tokens.compactMap {
+            guard let entity = try? createEntity($0) else {
+                return nil
+            }
+            return entity
+        }
+
+        try await persistentStorage.batchSave(content: entities)
         return try await update()
     }
 
@@ -52,22 +71,37 @@ public extension TokenRepository {
         let predicate = #Predicate<TokenDataEntity> { entity in
             entity.id == id
         }
-        guard let entity: TokenDataEntity = try await persistantStorage.fetchOne(predicate: predicate) else {
+        guard let entity: TokenDataEntity = try await persistentStorage.fetchOne(predicate: predicate) else {
             return
         }
-        try await persistantStorage.delete(element: entity)
+        try await persistentStorage.delete(element: entity)
         try await update()
     }
 
     func removeAll() async throws {
-        try await persistantStorage.deleteAll(dataTypes: [TokenDataEntity.self])
+        try await persistentStorage.deleteAll(dataTypes: [TokenDataEntity.self])
         try await update()
     }
+}
 
+private extension TokenRepository {
     @discardableResult
-    private func update() async throws -> [TokenData] {
-        let bars: [TokenData] = try await persistantStorage.fetchAll().toTokens
+    func update() async throws -> [TokenData] {
+        let bars: [TokenData] = try await getAllTokens() // persistentStorage.fetchAll().toTokens
         tokens.send(bars)
         return bars
     }
+
+    func createEntity(_ token: TokenData) throws -> TokenDataEntity {
+        let data = try encoder.encode(token)
+        guard let encryptedData: Data = try encryptionService.encrypt(data) else {
+            throw TokenRepositoryError.failedToEncrypt
+        }
+        return TokenDataEntity(id: token.id, encryptedData: encryptedData)
+    }
+}
+
+enum TokenRepositoryError: Error {
+    case failedToDecrypt
+    case failedToEncrypt
 }

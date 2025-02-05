@@ -147,7 +147,7 @@ struct TOTPCellView: View {
         ////            }
 //            viewModel.updateTOTP()
 //        }
-        .onScrollVisibilityChange(threshold: 0.2) { visible in
+        .onScrollVisibilityChange(threshold: 0) { visible in
             //            print("\(viewModel.item?.name ?? "") is \(visible ? "visible" : "hidden")")
 
             viewModel.update = visible
@@ -207,14 +207,20 @@ final class TOTPCellViewModel {
 //        updateTOTP()
 //    }
     init() {
-        cancellable = timerService.timer
+//        cancellable =
+        timerService.timer
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self, update else { return }
                 updateTOTP()
             }
-//            .store(in: &cancellables)
+            .store(in: &cancellables)
     }
+
+//    deinit {
+//        cancellable?.cancel()
+//        cancellable = nil
+//    }
 
     func update(item: TokenData) {
         self.item = item

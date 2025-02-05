@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Models
 import OneTimePassword
 import SwiftData
 
@@ -13,32 +14,38 @@ import SwiftData
 public final class TokenDataEntity: Equatable, Hashable, @unchecked Sendable {
     @Attribute(.unique)
     public private(set) var id: String
-    public private(set) var name: String?
-    public private(set) var iconUrl: String?
-    public private(set) var token: Token
-    public private(set) var isFavorite: Bool
-    public private(set) var widgetActivated: Bool
-    public private(set) var complementaryInfos: String?
-    public private(set) var folderId: String?
-    public private(set) var tags: [String]?
+    public private(set) var encryptedData: Data
+//    public private(set) var name: String?
+//    public private(set) var iconUrl: String?
+//    public private(set) var token: Token
+//    public private(set) var isFavorite: Bool
+//    public private(set) var widgetActivated: Bool
+//    public private(set) var complementaryInfos: String?
+//    public private(set) var folderId: String?
+//    public private(set) var tags: [Tag]?
 
-    init(id: String,
-         name: String? = nil,
-         iconUrl: String? = nil,
-         token: Token,
-         folderId: String? = nil,
-         isFavorite: Bool,
-         widgetActivated: Bool,
-         complementaryInfos: String? = nil,
-         tags: [String]? = nil) {
+//    init(id: String,
+//         name: String? = nil,
+//         iconUrl: String? = nil,
+//         token: Token,
+//         folderId: String? = nil,
+//         isFavorite: Bool,
+//         widgetActivated: Bool,
+//         complementaryInfos: String? = nil,
+//         tags: [Tag]? = nil) {
+//        self.id = id
+//        self.name = name
+//        self.iconUrl = iconUrl
+//        self.token = token
+//        self.isFavorite = isFavorite
+//        self.widgetActivated = widgetActivated
+//        self.complementaryInfos = complementaryInfos
+//        self.folderId = folderId
+//        self.tags = tags
+//    }
+
+    init(id: String, encryptedData: Data) {
         self.id = id
-        self.name = name
-        self.iconUrl = iconUrl
-        self.token = token
-        self.isFavorite = isFavorite
-        self.widgetActivated = widgetActivated
-        self.complementaryInfos = complementaryInfos
-        self.folderId = folderId
-        self.tags = tags
+        self.encryptedData = encryptedData
     }
 }

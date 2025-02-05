@@ -14,6 +14,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/lukacs-m/SimplyPersist", branch: "main"),
+        .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", .upToNextMajor(from: "4.2.0")),
         .package(name: "Models", path: "../Models")
     ],
     targets: [
@@ -23,6 +24,7 @@ let package = Package(
             name: "DataLayer",
             dependencies: [
                 .product(name: "SimplyPersist", package: "SimplyPersist"),
+                .product(name: "KeychainAccess", package: "KeychainAccess"),
                 .product(name: "Models", package: "Models")
             ]),
         .testTarget(
